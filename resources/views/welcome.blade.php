@@ -112,7 +112,9 @@
 <!-- TopNavBar -->
 <nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md font-label-md text-label-md docked full-width top-0 sticky z-50 shadow-sm">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max-width mx-auto">
-<a class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim" href="/">CharityHub</a>
+<a class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim flex items-center gap-2" href="/">
+<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
+CharityHub</a>
 <ul class="hidden md:flex gap-gutter items-center">
 <li><a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/">Home</a></li>
 <li><a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/#campaigns">Campaigns</a></li>
@@ -138,7 +140,7 @@
 <!-- Hero Section -->
 <section class="relative w-full h-[614px] min-h-[400px] flex items-center justify-center overflow-hidden bg-surface-variant">
 <div class="absolute inset-0 z-0">
-<img alt="Group of diverse people volunteering together" class="w-full h-full object-cover object-center" src="/images/about-hero.jpg"/>
+<img alt="Group of diverse people volunteering together" class="w-full h-full object-cover object-center" src="/images/about-hero.webp"/>
 <div class="absolute inset-0 bg-surface-inverse/60 mix-blend-multiply"></div>
 <!-- Linear gradient overlay to ensure text readability -->
 <div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 to-transparent"></div>
@@ -198,7 +200,7 @@
 <!-- Team Member 1 -->
 <div class="flex flex-col items-center bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/20">
 <div class="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-surface bg-surface-variant">
-<img alt="Profile team member 1" class="w-full h-full object-cover" src="/images/team-1.jpg"/>
+<img alt="Profile team member 1" class="w-full h-full object-cover" src="/images/team-1.webp"/>
 </div>
 <h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Akhmad Syaiful Anam</h4>
 <p class="font-label-md text-label-md text-primary bg-primary-fixed px-3 py-1 rounded-full uppercase tracking-wider">Backend &amp; Security</p>
@@ -206,7 +208,7 @@
 <!-- Team Member 2 -->
 <div class="flex flex-col items-center bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/20">
 <div class="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-surface bg-surface-variant">
-<img alt="Profile team member 2" class="w-full h-full object-cover" src="/images/team-2.jpg"/>
+<img alt="Profile team member 2" class="w-full h-full object-cover" src="/images/team-2.webp"/>
 </div>
 <h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Angilbert Yohanes Sirait</h4>
 <p class="font-label-md text-label-md text-secondary bg-secondary-fixed px-3 py-1 rounded-full uppercase tracking-wider">Data &amp; Campaign</p>
@@ -214,7 +216,7 @@
 <!-- Team Member 3 -->
 <div class="flex flex-col items-center bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/20">
 <div class="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-surface bg-surface-variant">
-<img alt="Profile team member 3" class="w-full h-full object-cover" src="/images/team-3.jpg"/>
+<img alt="Profile team member 3" class="w-full h-full object-cover" src="/images/team-3.webp"/>
 </div>
 <h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Firdaus Dewansyah</h4>
 <p class="font-label-md text-label-md text-tertiary bg-tertiary-fixed px-3 py-1 rounded-full uppercase tracking-wider">Ledger &amp; UI</p>

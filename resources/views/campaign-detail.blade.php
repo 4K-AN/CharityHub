@@ -114,9 +114,10 @@
 <!-- TopNavBar -->
 <nav class="bg-surface/80 shadow-sm docked full-width top-0 sticky z-50 backdrop-blur-md">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max-width mx-auto">
-<a href="/" class="font-display-lg text-headline-md font-bold text-primary no-underline">
+<a href="/" class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim no-underline flex items-center gap-2">
+<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
                 CharityHub
-</a>
+            </a>
 <div class="hidden md:flex gap-gutter items-center">
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/">Home</a>
 <a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="/#campaigns">Campaigns</a>

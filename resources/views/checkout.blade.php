@@ -53,7 +53,9 @@
 <!-- Top Navigation -->
 <nav class="bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-        <div class="text-xl font-bold text-primary">CharityHub</div>
+        <div class="text-xl font-bold text-primary flex items-center gap-2">
+<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
+CharityHub</div>
         <button onclick="history.back()" class="text-on-surface-variant hover:text-primary transition-colors">
             <span class="material-symbols-outlined">close</span>
         </button>
@@ -134,7 +136,7 @@
                 <h2 class="text-2xl font-bold text-on-surface mb-6">Metode Pembayaran</h2>
                 
                 <div class="space-y-3">
-                    <label class="payment-method border-2 border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary transition-all">
+                    <label class="payment-method block border-2 border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary transition-all">
                         <input type="radio" name="payment" value="bank_transfer" class="mr-3">
                         <span class="font-semibold text-on-surface">
                             <span class="material-symbols-outlined text-[20px] align-middle mr-2">account_balance</span>
@@ -143,7 +145,7 @@
                         <p class="text-xs text-on-surface-variant mt-2 ml-7">Transfer langsung ke rekening CharityHub yang terverifikasi</p>
                     </label>
 
-                    <label class="payment-method border-2 border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary transition-all">
+                    <label class="payment-method block border-2 border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary transition-all">
                         <input type="radio" name="payment" value="ewallet" class="mr-3">
                         <span class="font-semibold text-on-surface">
                             <span class="material-symbols-outlined text-[20px] align-middle mr-2">phone_in_talk</span>
@@ -152,7 +154,7 @@
                         <p class="text-xs text-on-surface-variant mt-2 ml-7">Pembayaran instan melalui aplikasi e-wallet Anda</p>
                     </label>
 
-                    <label class="payment-method border-2 border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary transition-all">
+                    <label class="payment-method block border-2 border-outline-variant rounded-xl p-4 cursor-pointer hover:border-primary transition-all">
                         <input type="radio" name="payment" value="credit_card" class="mr-3">
                         <span class="font-semibold text-on-surface">
                             <span class="material-symbols-outlined text-[20px] align-middle mr-2">credit_card</span>
@@ -327,6 +329,21 @@
         document.getElementById('summaryTotal').textContent = formatCurrency(total);
     }
 
+    // Payment method selection
+    document.querySelectorAll('input[name="payment"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            document.querySelectorAll('.payment-method').forEach(label => {
+                label.classList.remove('border-primary', 'bg-primary/5');
+                label.classList.add('border-outline-variant');
+            });
+            if (e.target.checked) {
+                const parentLabel = e.target.closest('.payment-method');
+                parentLabel.classList.remove('border-outline-variant');
+                parentLabel.classList.add('border-primary', 'bg-primary/5');
+            }
+        });
+    });
+
     function formatCurrency(num) {
         return 'Rp ' + num.toLocaleString('id-ID');
     }
@@ -335,9 +352,14 @@
     document.getElementById('submitBtn').addEventListener('click', async () => {
         const donorName = document.getElementById('donorName').value;
         const anonymous = document.getElementById('anonymous').checked;
+        const paymentMethod = document.querySelector('input[name="payment"]:checked');
 
         if (donationAmount < 10000) {
             alert('Minimal donasi adalah Rp 10.000');
+            return;
+        }
+        if (!paymentMethod) {
+            alert('Silakan pilih metode pembayaran terlebih dahulu');
             return;
         }
         if (!donorName) {

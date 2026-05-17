@@ -54,7 +54,9 @@
         <span class="material-symbols-outlined text-[18px]">arrow_back</span>
         Kembali
     </a>
-    <a href="/" class="text-[24px] font-bold text-primary no-underline ml-2">CharityHub</a>
+    <a href="/" class="text-[24px] font-bold text-primary no-underline ml-2 flex items-center gap-2">
+<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
+CharityHub</a>
 </div>
 <a href="/login" class="text-[14px] text-primary hover:underline font-medium hidden sm:inline-block">Sudah punya akun? Masuk</a>
 </div>

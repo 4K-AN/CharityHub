@@ -111,7 +111,8 @@
 <!-- TopNavBar -->
 <nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md text-primary dark:text-primary-fixed-dim font-label-md text-label-md docked full-width top-0 sticky z-50 shadow-sm">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max-width mx-auto">
-<a href="/" class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim no-underline">
+<a href="/" class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim no-underline flex items-center gap-2">
+<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
                 CharityHub
 </a>
 <div class="hidden md:flex items-center gap-gutter">
@@ -194,7 +195,7 @@
 <!-- Hero Image with Shadow -->
 <div class="w-full max-w-4xl mt-12 group">
 <div class="relative rounded-2xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
-<img alt="Ilustrasi orang-orang berkolaborasi mengangkat hati biru bersama, melambangkan gotong royong dan kepedulian sosial" class="w-full h-auto object-contain" src="/images/landing-hero.jpg"/>
+<img alt="Ilustrasi orang-orang berkolaborasi mengangkat hati biru bersama, melambangkan gotong royong dan kepedulian sosial" class="w-full h-auto object-contain" src="/images/landing-hero.webp"/>
 <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 </div>
@@ -211,21 +212,14 @@
 <div class="flex flex-col md:flex-row gap-4 items-stretch">
 <div class="relative flex-1">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
-<input class="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-outline-variant bg-surface focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all font-body-md text-on-surface shadow-sm" placeholder="Cari campaign atau kata kunci..." type="text"/>
+<input id="search-input" class="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-outline-variant bg-surface focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all font-body-md text-on-surface shadow-sm" placeholder="Cari campaign atau kata kunci..." type="text"/>
 </div>
 <div class="flex flex-col sm:flex-row gap-4 md:w-auto">
-<select class="px-4 py-3 rounded-xl border-2 border-outline-variant bg-surface font-body-md text-on-surface shadow-sm focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all">
-<option disabled="" selected="" value="">📚 Kategori</option>
-<option value="pendidikan">Pendidikan</option>
-<option value="bencana">Bencana</option>
-<option value="medis">Medis</option>
-<option value="panti">Panti Asuhan</option>
-</select>
-<select class="px-4 py-3 rounded-xl border-2 border-outline-variant bg-surface font-body-md text-on-surface shadow-sm focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all">
-<option disabled="" selected="" value="">💚 Status</option>
-<option value="aktif">Aktif</option>
-<option value="selesai">Selesai</option>
-<option value="mendesak">Mendesak</option>
+<select id="filter-status" class="px-4 py-3 rounded-xl border-2 border-outline-variant bg-surface font-body-md text-on-surface shadow-sm focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all">
+<option selected="" value="all">💚 Semua Status</option>
+<option value="Aktif">Aktif</option>
+<option value="Selesai">Selesai</option>
+<option value="Ditutup">Ditutup</option>
 </select>
 </div>
 </div>
@@ -387,59 +381,89 @@
                     return;
                 }
 
-                container.innerHTML = '';
-                
-                campaigns.forEach(campaign => {
-                    // Calculate total donation manually (frontend side calculation rule)
-                    const totalDonations = campaign.donations.reduce((sum, d) => sum + parseFloat(d.amount), 0);
-                    const goal = parseFloat(campaign.goal_amount);
-                    const progress = Math.min((totalDonations / goal) * 100, 100).toFixed(1);
-
-                    // Formatter
-                    const formatRupiah = (number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+                let allCampaigns = campaigns;
+                const renderCampaigns = (filteredCampaigns) => {
+                    container.innerHTML = '';
+                    if (filteredCampaigns.length === 0) {
+                        container.innerHTML = '<p class="text-center text-on-surface-variant col-span-full">Tidak ada kampanye yang cocok dengan pencarian Anda.</p>';
+                        return;
+                    }
                     
-                    const imageSrc = campaign.image ? `/storage/${campaign.image}` : 'https://placehold.co/600x400?text=No+Image';
+                    filteredCampaigns.forEach(campaign => {
+                        // Calculate total donation manually (frontend side calculation rule)
+                        const totalDonations = campaign.donations.reduce((sum, d) => sum + parseFloat(d.amount), 0);
+                        const goal = parseFloat(campaign.goal_amount);
+                        const progress = Math.min((totalDonations / goal) * 100, 100).toFixed(1);
 
-                    container.innerHTML += `
-                        <div class="bg-surface rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col hover:shadow-xl hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2">
-                            <div class="h-48 w-full bg-surface-container-high relative overflow-hidden group">
-                                <img src="${imageSrc}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500" alt="Campaign Image">
-                                <span class="absolute top-4 left-4 bg-surface/95 backdrop-blur-sm text-primary font-label-sm px-3 py-1.5 rounded-full border border-primary/20 font-bold">Kampanye</span>
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow gap-4">
-                                <div>
-                                    <h3 class="font-headline-md text-headline-md text-on-background line-clamp-2 hover:text-primary transition-colors">${campaign.title}</h3>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">${campaign.description}</p>
+                        // Formatter
+                        const formatRupiah = (number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+                        
+                        const imageSrc = campaign.image ? `/storage/${campaign.image}` : 'https://placehold.co/600x400?text=No+Image';
+
+                        container.innerHTML += `
+                            <div class="bg-surface rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col hover:shadow-xl hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2">
+                                <div class="h-48 w-full bg-surface-container-high relative overflow-hidden group">
+                                    <img src="${imageSrc}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500" alt="Campaign Image">
+                                    <span class="absolute top-4 left-4 bg-surface/95 backdrop-blur-sm text-primary font-label-sm px-3 py-1.5 rounded-full border border-primary/20 font-bold">${campaign.status}</span>
                                 </div>
-                                <div class="mt-auto flex flex-col gap-3">
+                                <div class="p-6 flex flex-col flex-grow gap-4">
                                     <div>
-                                        <div class="flex justify-between items-center mb-2">
-                                            <span class="font-label-sm text-label-sm text-on-surface-variant">Progress Dana</span>
-                                            <span class="font-label-sm text-label-sm font-bold text-primary">${progress}%</span>
-                                        </div>
-                                        <div class="w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden">
-                                            <div class="bg-gradient-to-r from-primary to-primary-container h-full rounded-full" style="width: ${progress}%"></div>
-                                        </div>
+                                        <h3 class="font-headline-md text-headline-md text-on-background line-clamp-2 hover:text-primary transition-colors">${campaign.title}</h3>
+                                        <p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">${campaign.description}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
+                                    <div class="mt-auto flex flex-col gap-3">
                                         <div>
-                                            <p class="font-label-sm text-label-sm text-on-surface-variant">Terkumpul</p>
-                                            <p class="font-headline-sm text-headline-sm text-primary font-bold">${formatRupiah(totalDonations)}</p>
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="font-label-sm text-label-sm text-on-surface-variant">Progress Dana</span>
+                                                <span class="font-label-sm text-label-sm font-bold text-primary">${progress}%</span>
+                                            </div>
+                                            <div class="w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden">
+                                                <div class="bg-gradient-to-r from-primary to-primary-container h-full rounded-full" style="width: ${progress}%"></div>
+                                            </div>
                                         </div>
-                                        <div class="text-right">
-                                            <p class="font-label-sm text-label-sm text-on-surface-variant">Target</p>
-                                            <p class="font-headline-sm text-headline-sm text-on-surface font-bold">${formatRupiah(goal)}</p>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <p class="font-label-sm text-label-sm text-on-surface-variant">Terkumpul</p>
+                                                <p class="font-headline-sm text-headline-sm text-primary font-bold">${formatRupiah(totalDonations)}</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="font-label-sm text-label-sm text-on-surface-variant">Target</p>
+                                                <p class="font-headline-sm text-headline-sm text-on-surface font-bold">${formatRupiah(goal)}</p>
+                                            </div>
                                         </div>
                                     </div>
+                                    <a href="/campaigns/${campaign.id}" class="w-full mt-4 bg-primary text-on-primary font-label-md py-3 rounded-xl hover:bg-primary-container hover:text-on-primary-container transition-all duration-300 shadow-sm hover:shadow-md flex items-center justify-center gap-2 font-semibold">
+                                        <span class="material-symbols-outlined text-[20px]">favorite</span>
+                                        Lihat & Donasi
+                                    </a>
                                 </div>
-                                <a href="/campaigns/${campaign.id}" class="w-full mt-4 bg-primary text-on-primary font-label-md py-3 rounded-xl hover:bg-primary-container hover:text-on-primary-container transition-all duration-300 shadow-sm hover:shadow-md flex items-center justify-center gap-2 font-semibold">
-                                    <span class="material-symbols-outlined text-[20px]">favorite</span>
-                                    Lihat & Donasi
-                                </a>
                             </div>
-                        </div>
-                    `;
-                });
+                        `;
+                    });
+                };
+                
+                // Initial render
+                renderCampaigns(allCampaigns);
+
+                // Setup Filters
+                const searchInput = document.getElementById('search-input');
+                const filterStatus = document.getElementById('filter-status');
+
+                function applyFilters() {
+                    const query = searchInput.value.toLowerCase();
+                    const status = filterStatus.value;
+                    
+                    const filtered = allCampaigns.filter(c => {
+                        const matchText = c.title.toLowerCase().includes(query) || c.description.toLowerCase().includes(query);
+                        const matchStatus = status === 'all' || c.status === status;
+                        return matchText && matchStatus;
+                    });
+                    
+                    renderCampaigns(filtered);
+                }
+
+                searchInput.addEventListener('input', applyFilters);
+                filterStatus.addEventListener('change', applyFilters);
             })
             .catch(error => {
                 console.error("Error fetching campaigns:", error);

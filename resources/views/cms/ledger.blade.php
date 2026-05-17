@@ -116,7 +116,9 @@
 <span class="material-symbols-outlined" data-icon="volunteer_activism" data-weight="fill" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
 </div>
 <div>
-<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">CharityHub Admin</h1>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim flex items-center gap-2">
+<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
+CharityHub Admin</h1>
 <p class="font-label-sm text-label-sm text-on-surface-variant">Internal CMS</p>
 </div>
 </div>

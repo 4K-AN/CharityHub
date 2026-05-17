@@ -185,7 +185,9 @@
 <!-- Sidebar -->
 <aside class="w-64 bg-surface-container-lowest border-r border-outline-variant/20 flex flex-col hidden md:flex flex-shrink-0">
 <div class="h-20 flex items-center px-gutter border-b border-outline-variant/20">
-<span class="font-headline-md text-headline-md text-primary">CharityHub Admin</span>
+<span class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
+CharityHub Admin</span>
 </div>
 <nav class="flex-1 py-unit px-unit space-y-2 overflow-y-auto">
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md" href="/cms/dashboard">

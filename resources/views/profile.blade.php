@@ -111,7 +111,8 @@
 <!-- Navigation -->
 <nav class="bg-surface/80 backdrop-blur-md text-primary font-label-md text-label-md top-0 sticky z-50 shadow-sm">
     <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max-width mx-auto">
-        <a href="/" class="font-display-lg text-headline-md font-bold text-primary hover:opacity-80 transition-opacity">
+        <a href="/" class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim no-underline flex items-center gap-2">
+            <img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
             CharityHub
         </a>
         <div class="hidden md:flex items-center gap-gutter">

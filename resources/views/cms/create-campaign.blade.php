@@ -119,7 +119,9 @@
 <div class="p-6">
 <a class="flex items-center gap-2 text-primary" href="/cms/dashboard">
 <span class="material-symbols-outlined fill text-3xl">volunteer_activism</span>
-<span class="font-headline-md text-headline-md font-bold">CharityHub Admin</span>
+<span class="font-headline-md text-headline-md font-bold flex items-center gap-2">
+<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
+CharityHub Admin</span>
 </a>
 </div>
 <nav class="flex-1 px-4 py-6 space-y-2">
