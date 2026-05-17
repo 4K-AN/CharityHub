@@ -178,7 +178,7 @@
 </div>
 <p class="font-body-md text-body-md text-on-surface-variant">Detail Manajemen Arus Kas</p>
 </div>
-<button class="px-6 py-3 rounded-lg border-2 border-error text-error font-label-md text-label-md hover:bg-error-container transition-colors flex items-center gap-2 self-start md:self-auto">
+<button onclick="closeCampaign()" class="px-6 py-3 rounded-lg border-2 border-error text-error font-label-md text-label-md hover:bg-error-container transition-colors flex items-center gap-2 self-start md:self-auto shadow-sm transform hover:scale-105 active:scale-95">
 <span class="material-symbols-outlined" data-icon="cancel">cancel</span>
                 Tutup Kampanye
             </button>
@@ -373,6 +373,22 @@
             alert('Error: ' + (err.response?.data?.message || err.message));
         }
     });
+
+    async function closeCampaign() {
+        if (!confirm('Apakah Anda yakin ingin menutup kampanye ini? Donatur tidak akan bisa berdonasi lagi.')) return;
+
+        try {
+            await axios.put(`/api/campaigns/${campaignId}`, {
+                status: 'Selesai'
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert('Kampanye berhasil ditutup.');
+            loadData();
+        } catch (err) {
+            alert('Error: ' + (err.response?.data?.message || err.message));
+        }
+    }
 
     function logoutAction() {
         axios.post('/api/logout', {}, { headers: { Authorization: `Bearer ${token}` } }).finally(() => {

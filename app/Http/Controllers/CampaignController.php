@@ -160,4 +160,35 @@ class CampaignController extends Controller
             'campaign' => $campaign->fresh()->load('user:id,name'),
         ]);
     }
+
+    /**
+     * DELETE /api/campaigns/{id} [JWT - Campaigner]
+     * Hapus campaign beserta data terkait.
+     * Hanya pemilik campaign yang bisa menghapus.
+     */
+    public function destroy(string $id)
+    {
+        $campaign = Campaign::find($id);
+
+        if (!$campaign) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Campaign tidak ditemukan',
+            ], 404);
+        }
+
+        if ($campaign->user_id !== auth()->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak memiliki akses untuk menghapus campaign ini',
+            ], 403);
+        }
+
+        $campaign->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Campaign berhasil dihapus',
+        ]);
+    }
 }

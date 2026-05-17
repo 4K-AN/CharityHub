@@ -41,6 +41,7 @@ Route::get('/campaigns/{id}', [CampaignController::class, 'show']);
 Route::middleware(['jwt.auth', 'role:Campaigner'])->group(function () {
     Route::post('/campaigns', [CampaignController::class, 'store']);
     Route::put('/campaigns/{id}', [CampaignController::class, 'update']);
+    Route::delete('/campaigns/{id}', [CampaignController::class, 'destroy']);
 });
 
 // =========================================================================

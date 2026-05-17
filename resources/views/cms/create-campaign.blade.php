@@ -206,18 +206,17 @@
 <!-- Upload -->
 <div>
 <label class="block font-label-md text-label-md text-on-surface mb-2">Foto Sampul</label>
-<div class="mt-1 flex justify-center px-6 pt-10 pb-10 border-2 border-outline-variant/40 border-dashed rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer group">
-<div class="space-y-2 text-center flex flex-col items-center">
+<label class="mt-1 flex justify-center px-6 pt-10 pb-10 border-2 border-outline-variant/40 border-dashed rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer group relative overflow-hidden h-64" for="file-upload">
+<div id="upload-placeholder" class="space-y-2 text-center flex flex-col items-center justify-center h-full z-10">
 <span class="material-symbols-outlined text-4xl text-outline group-hover:text-primary transition-colors">add_photo_alternate</span>
-<div class="flex text-sm text-on-surface-variant">
-<label class="relative cursor-pointer rounded-md bg-transparent font-label-md text-primary focus-within:outline-none hover:text-primary-container" for="file-upload">
-<span>Unggah Foto Sampul Kampanye</span>
+<div class="flex text-sm text-on-surface-variant mt-2">
+<span class="font-label-md text-primary group-hover:text-primary-container">Unggah Foto Sampul Kampanye</span>
+</div>
+<p class="text-xs text-outline mt-1">PNG, JPG, GIF hingga 2MB</p>
+</div>
+<img id="image-preview" src="" alt="Preview Foto" class="absolute inset-0 w-full h-full object-cover hidden z-20" />
 <input accept="image/*" class="sr-only" id="file-upload" name="file-upload" type="file"/>
 </label>
-</div>
-<p class="text-xs text-outline">PNG, JPG, GIF hingga 5MB</p>
-</div>
-</div>
 </div>
 <!-- Actions -->
 <div class="pt-6 border-t border-outline-variant/20 flex justify-end gap-4 mt-8">
@@ -250,6 +249,28 @@
         .catch(() => {
             window.location.href = '/login';
         });
+
+    // Image Preview Logic
+    const fileInput = document.getElementById('file-upload');
+    const imagePreview = document.getElementById('image-preview');
+    const uploadPlaceholder = document.getElementById('upload-placeholder');
+
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.classList.remove('hidden');
+                uploadPlaceholder.classList.add('hidden');
+            }
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.src = "";
+            imagePreview.classList.add('hidden');
+            uploadPlaceholder.classList.remove('hidden');
+        }
+    });
 
     const form = document.querySelector('form');
     form.addEventListener('submit', async (e) => {

@@ -359,9 +359,12 @@
                 </td>
                 <td class="p-4">${statusBadge}</td>
                 <td class="p-4 text-right space-x-2 whitespace-nowrap">
-                    <a href="/cms/campaigns/${c.id}/ledger" class="inline-block px-3 py-1.5 border-2 border-primary text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary hover:text-on-primary transition-all">
-                        Kelola Log
+                    <a href="/cms/campaigns/${c.id}/ledger" class="inline-block px-3 py-1.5 border border-primary text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary hover:text-on-primary transition-all">
+                        Kelola
                     </a>
+                    <button onclick="deleteCampaign('${c.id}')" class="inline-block px-3 py-1.5 bg-error-container text-error rounded-lg font-label-sm text-label-sm hover:bg-error hover:text-on-error transition-all border border-error/20">
+                        Hapus
+                    </button>
                 </td>
             </tr>
             `;
@@ -419,6 +422,21 @@
         if (num >= 1000000000) return 'Rp ' + (num / 1000000000).toFixed(1) + 'M';
         if (num >= 1000000) return 'Rp ' + (num / 1000000).toFixed(1) + 'Jt';
         return 'Rp ' + num.toLocaleString('id-ID');
+    }
+
+    async function deleteCampaign(id) {
+        if (!confirm('AWAS! Anda yakin ingin menghapus kampanye ini beserta semua riwayat donasi dan pencairannya secara permanen?')) return;
+
+        try {
+            await axios.delete(`/api/campaigns/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert('Kampanye berhasil dihapus permanen.');
+            // Reload dashboard
+            window.location.reload();
+        } catch (err) {
+            alert('Gagal menghapus: ' + (err.response?.data?.message || err.message));
+        }
     }
 
     function logoutAction() {

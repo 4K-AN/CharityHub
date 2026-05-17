@@ -153,7 +153,7 @@
 <div class="lg:col-span-8 space-y-6">
 <!-- Hero Image -->
 <div class="w-full aspect-video rounded-xl overflow-hidden bg-surface-container shadow-sm border border-outline-variant/30">
-<img id="campaign-image" alt="Kampanye Cover" class="w-full h-full object-cover" src="https://placehold.co/1280x720?text=Loading..."/>
+<img id="campaign-image" alt="Kampanye Cover" class="w-full h-full object-cover object-top" src="https://placehold.co/1280x720?text=Loading..."/>
 </div>
 <!-- Title & Description -->
 <div>

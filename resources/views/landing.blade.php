@@ -403,7 +403,7 @@
                     container.innerHTML += `
                         <div class="bg-surface rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col hover:shadow-xl hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2">
                             <div class="h-48 w-full bg-surface-container-high relative overflow-hidden group">
-                                <img src="${imageSrc}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Campaign Image">
+                                <img src="${imageSrc}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500" alt="Campaign Image">
                                 <span class="absolute top-4 left-4 bg-surface/95 backdrop-blur-sm text-primary font-label-sm px-3 py-1.5 rounded-full border border-primary/20 font-bold">Kampanye</span>
                             </div>
                             <div class="p-6 flex flex-col flex-grow gap-4">
