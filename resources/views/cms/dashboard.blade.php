@@ -233,110 +233,172 @@
 </header>
 <!-- Dashboard Content -->
 <div class="p-margin-mobile md:p-margin-desktop space-y-gutter max-w-container-max-width mx-auto w-full">
-<!-- Summary Cards -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-<!-- Card 1 -->
-<div class="bg-surface-container-lowest p-gutter rounded-xl shadow-sm border border-outline-variant/20 flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-primary-container/20 text-primary flex items-center justify-center flex-shrink-0">
+<!-- Summary Cards with Animations -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1 - Active Campaigns -->
+<div class="bg-surface-container-lowest p-gutter rounded-2xl shadow-sm border border-outline-variant/20 hover:shadow-lg hover:border-primary/50 transition-all transform hover:-translate-y-1">
+<div class="flex items-center justify-between mb-4">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-container/20 text-primary flex items-center justify-center">
 <span class="material-symbols-outlined text-[24px]">campaign</span>
 </div>
-<div>
-<p class="text-on-surface-variant font-body-md text-body-md">Total Kampanye Aktif</p>
-<p class="text-on-surface font-headline-md text-headline-md">5</p>
+<span class="text-xs font-bold px-3 py-1 bg-green-100 text-green-700 rounded-full">+18% 📈</span>
 </div>
+<p class="text-on-surface-variant font-body-md text-body-md mb-1">Kampanye Aktif</p>
+<p class="text-on-surface font-headline-lg text-headline-lg font-bold">5</p>
+<p class="text-xs text-on-surface-variant mt-2">3 baru bulan ini</p>
 </div>
-<!-- Card 2 -->
-<div class="bg-surface-container-lowest p-gutter rounded-xl shadow-sm border border-outline-variant/20 flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-secondary-container/20 text-secondary flex items-center justify-center flex-shrink-0">
+
+<!-- Card 2 - Total Collected -->
+<div class="bg-surface-container-lowest p-gutter rounded-2xl shadow-sm border border-outline-variant/20 hover:shadow-lg hover:border-secondary/50 transition-all transform hover:-translate-y-1">
+<div class="flex items-center justify-between mb-4">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-secondary-container/20 to-secondary/20 text-secondary flex items-center justify-center">
 <span class="material-symbols-outlined text-[24px]">payments</span>
 </div>
-<div>
-<p class="text-on-surface-variant font-body-md text-body-md">Total Dana Terkumpul</p>
-<p class="text-on-surface font-headline-md text-headline-md">Rp 45.000.000</p>
+<span class="text-xs font-bold px-3 py-1 bg-blue-100 text-blue-700 rounded-full">+8.5% 📈</span>
 </div>
+<p class="text-on-surface-variant font-body-md text-body-md mb-1">Dana Terkumpul</p>
+<p class="text-on-surface font-headline-lg text-headline-lg font-bold">Rp 45M</p>
+<p class="text-xs text-on-surface-variant mt-2">Minggu ini +Rp 3.5M</p>
 </div>
-<!-- Card 3 -->
-<div class="bg-surface-container-lowest p-gutter rounded-xl shadow-sm border border-outline-variant/20 flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-surface-tint/20 text-surface-tint flex items-center justify-center flex-shrink-0">
+
+<!-- Card 3 - Disbursed -->
+<div class="bg-surface-container-lowest p-gutter rounded-2xl shadow-sm border border-outline-variant/20 hover:shadow-lg hover:border-tertiary/50 transition-all transform hover:-translate-y-1">
+<div class="flex items-center justify-between mb-4">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-tertiary/20 to-tertiary-container/20 text-tertiary flex items-center justify-center">
 <span class="material-symbols-outlined text-[24px]">account_balance_wallet</span>
 </div>
-<div>
-<p class="text-on-surface-variant font-body-md text-body-md">Total Dana Dicairkan</p>
-<p class="text-on-surface font-headline-md text-headline-md">Rp 30.000.000</p>
+<span class="text-xs font-bold px-3 py-1 bg-orange-100 text-orange-700 rounded-full">+12% 📈</span>
 </div>
+<p class="text-on-surface-variant font-body-md text-body-md mb-1">Dana Dicairkan</p>
+<p class="text-on-surface font-headline-lg text-headline-lg font-bold">Rp 30M</p>
+<p class="text-xs text-on-surface-variant mt-2">67% dari target</p>
+</div>
+
+<!-- Card 4 - Donors -->
+<div class="bg-surface-container-lowest p-gutter rounded-2xl shadow-sm border border-outline-variant/20 hover:shadow-lg hover:border-secondary-container/50 transition-all transform hover:-translate-y-1">
+<div class="flex items-center justify-between mb-4">
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-secondary-fixed-dim/20 to-secondary-fixed/20 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">group</span>
+</div>
+<span class="text-xs font-bold px-3 py-1 bg-purple-100 text-purple-700 rounded-full">+22% 📈</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mb-1">Total Donatur</p>
+<p class="text-on-surface font-headline-lg text-headline-lg font-bold">2.4K</p>
+<p class="text-xs text-on-surface-variant mt-2">156 donatur baru bulan ini</p>
 </div>
 </div>
 <!-- Campaign Table Section -->
-<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/20 overflow-hidden">
-<div class="p-gutter border-b border-outline-variant/20 flex justify-between items-center">
+<div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
+<div class="p-gutter border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-low">
 <h2 class="font-headline-md text-headline-md text-on-surface">Kampanye Saya</h2>
-<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-colors flex items-center gap-2">
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-xl font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-all shadow-sm hover:shadow-md flex items-center gap-2 transform hover:scale-105 active:scale-95">
 <span class="material-symbols-outlined text-[18px]">add</span>
-                        Buat Kampanye
+                        Buat Kampanye Baru
                     </button>
 </div>
+
 <div class="overflow-x-auto">
 <table class="w-full text-left border-collapse">
 <thead>
-<tr class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md border-b border-outline-variant/20">
+<tr class="bg-surface-container text-on-surface-variant font-label-md text-label-md border-b border-outline-variant/20">
 <th class="p-4 font-semibold whitespace-nowrap">Judul Kampanye</th>
 <th class="p-4 font-semibold whitespace-nowrap">Target Dana</th>
-<th class="p-4 font-semibold whitespace-nowrap">Dana Terkumpul</th>
+<th class="p-4 font-semibold whitespace-nowrap">Terkumpul</th>
+<th class="p-4 font-semibold whitespace-nowrap">Progress</th>
 <th class="p-4 font-semibold whitespace-nowrap">Status</th>
 <th class="p-4 font-semibold whitespace-nowrap text-right">Aksi</th>
 </tr>
 </thead>
-<tbody class="font-body-md text-body-md">
-<tr class="border-b border-outline-variant/10 hover:bg-surface-container-low/50 transition-colors">
-<td class="p-4 text-on-surface">Bantu Pendidikan Anak Yatim di Desa Makmur</td>
+
+<tbody class="font-body-md text-body-md divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4 text-on-surface font-semibold max-w-xs truncate">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">school</span>
+                                Bantu Pendidikan Anak Yatim di Desa Makmur
+                            </div>
+</td>
 <td class="p-4 text-on-surface-variant">Rp 50.000.000</td>
-<td class="p-4 text-on-surface font-medium">Rp 25.000.000</td>
+<td class="p-4 text-primary font-semibold">Rp 25.000.000</td>
 <td class="p-4">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#def7ec] text-[#03543f]">
-                                        Aktif
+<div class="w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden max-w-[100px]">
+<div class="bg-gradient-to-r from-primary to-primary-container h-full rounded-full" style="width: 50%"></div>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">50%</p>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-green-100 text-green-700">
+                                        ✓ Aktif
                                     </span>
 </td>
 <td class="p-4 text-right space-x-2 whitespace-nowrap">
-<button class="px-3 py-1 border border-primary text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+<button class="px-3 py-1.5 border-2 border-primary text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary hover:text-on-primary transition-all">
                                         Kelola Log
                                     </button>
-<button class="px-3 py-1 border border-outline text-on-surface-variant rounded-lg font-label-sm text-label-sm hover:bg-surface-container transition-colors">
+<button class="px-3 py-1.5 border border-outline text-on-surface-variant rounded-lg font-label-sm text-label-sm hover:bg-surface-container transition-colors">
                                         Edit
                                     </button>
 </td>
 </tr>
-<tr class="border-b border-outline-variant/10 hover:bg-surface-container-low/50 transition-colors">
-<td class="p-4 text-on-surface">Pembangunan Sumur Air Bersih</td>
+
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4 text-on-surface font-semibold max-w-xs truncate">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-600">water_drop</span>
+                                Pembangunan Sumur Air Bersih
+                            </div>
+</td>
 <td class="p-4 text-on-surface-variant">Rp 20.000.000</td>
-<td class="p-4 text-on-surface font-medium">Rp 20.000.000</td>
+<td class="p-4 text-primary font-semibold">Rp 20.000.000</td>
 <td class="p-4">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error-container text-on-error-container">
-                                        Selesai
+<div class="w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden max-w-[100px]">
+<div class="bg-gradient-to-r from-green-500 to-green-600 h-full rounded-full" style="width: 100%"></div>
+</div>
+<p class="text-xs text-green-600 font-bold mt-1">100% ✓</p>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700">
+                                        ✓ Selesai
                                     </span>
 </td>
 <td class="p-4 text-right space-x-2 whitespace-nowrap">
-<button class="px-3 py-1 border border-primary text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
-                                        Kelola Log
+<button class="px-3 py-1.5 border-2 border-primary text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary hover:text-on-primary transition-all">
+                                        Lihat Log
                                     </button>
-<button class="px-3 py-1 border border-outline text-on-surface-variant rounded-lg font-label-sm text-label-sm hover:bg-surface-container transition-colors" disabled="">
+<button class="px-3 py-1.5 border border-outline text-on-surface-variant rounded-lg font-label-sm text-label-sm hover:bg-surface-container transition-colors opacity-50 cursor-not-allowed" disabled="">
                                         Edit
                                     </button>
 </td>
 </tr>
-<tr class="hover:bg-surface-container-low/50 transition-colors">
-<td class="p-4 text-on-surface">Renovasi Panti Asuhan Harapan</td>
+
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4 text-on-surface font-semibold max-w-xs truncate">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-600">home</span>
+                                Renovasi Panti Asuhan Harapan
+                            </div>
+</td>
 <td class="p-4 text-on-surface-variant">Rp 100.000.000</td>
-<td class="p-4 text-on-surface font-medium">Rp 0</td>
+<td class="p-4 text-on-surface-variant">Rp 0</td>
 <td class="p-4">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#def7ec] text-[#03543f]">
-                                        Aktif
+<div class="w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden max-w-[100px]">
+<div class="bg-surface-container-high h-full rounded-full" style="width: 0%"></div>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">0%</p>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-yellow-100 text-yellow-700">
+                                        ⏳ Baru
                                     </span>
 </td>
 <td class="p-4 text-right space-x-2 whitespace-nowrap">
-<button class="px-3 py-1 border border-primary text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+<button class="px-3 py-1.5 border-2 border-primary text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary hover:text-on-primary transition-all">
                                         Kelola Log
                                     </button>
-<button class="px-3 py-1 border border-outline text-on-surface-variant rounded-lg font-label-sm text-label-sm hover:bg-surface-container transition-colors">
+<button class="px-3 py-1.5 border border-outline text-on-surface-variant rounded-lg font-label-sm text-label-sm hover:bg-surface-container transition-colors">
                                         Edit
                                     </button>
 </td>
