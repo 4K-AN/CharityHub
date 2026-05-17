@@ -123,7 +123,7 @@
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/about">About</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/contact">Contact</a>
 </div>
-<div class="hidden md:block">
+<div class="hidden md:block" id="auth-btn-desktop">
 <a class="inline-block bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity" href="/login">Login / Daftar</a>
 </div>
 <button id="mobile-menu-btn" class="md:hidden text-primary p-2 rounded-lg hover:bg-primary/10 transition-colors" aria-label="Toggle Menu">
@@ -138,9 +138,11 @@
 <a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/about">About</a>
 <a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/contact">Contact</a>
 <hr class="border-outline-variant/20 my-2">
-<a href="/login" class="px-4 py-3 rounded-xl bg-primary text-on-primary text-center font-semibold hover:opacity-90 transition-opacity">
+<div id="auth-btn-mobile">
+<a href="/login" class="block px-4 py-3 rounded-xl bg-primary text-on-primary text-center font-semibold hover:opacity-90 transition-opacity">
     Login / Daftar
 </a>
+</div>
 </div>
 </div>
 </nav>
@@ -352,21 +354,26 @@
         // Auth-aware Navbar
         const token = localStorage.getItem('jwt_token');
         if (token) {
-            axios.get('/api/me', { headers: { Authorization: `Bearer ${token}` } })
+            axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
                 .then(res => {
                     const user = res.data.user;
-                    const desktopBtn = document.querySelector('.hidden.md\\:block a[href="/login"]');
+                    localStorage.setItem('user_name', user.name);
+                    localStorage.setItem('user_role', user.role);
+                    const profileLink = user.role === 'Campaigner' ? '/cms/dashboard' : '/profile';
+                    const desktopBtn = document.getElementById('auth-btn-desktop');
+                    const mobileBtn = document.getElementById('auth-btn-mobile');
                     if (desktopBtn) {
-                        desktopBtn.textContent = `👤 ${user.name}`;
-                        desktopBtn.href = user.role === 'Campaigner' ? '/cms/dashboard' : '/profile';
+                        desktopBtn.innerHTML = `<a href="${profileLink}" class="inline-flex items-center gap-2 bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"><span class=\"material-symbols-outlined text-[18px]\">person</span>${user.name}</a>`;
                     }
-                    const mobileBtn = document.querySelector('#mobile-menu a[href="/login"]');
                     if (mobileBtn) {
-                        mobileBtn.textContent = `👤 ${user.name}`;
-                        mobileBtn.href = user.role === 'Campaigner' ? '/cms/dashboard' : '/profile';
+                        mobileBtn.innerHTML = `<a href="${profileLink}" class="block px-4 py-3 rounded-xl bg-primary text-on-primary text-center font-semibold hover:opacity-90 transition-opacity">👤 ${user.name}</a>`;
                     }
                 })
-                .catch(() => { localStorage.removeItem('jwt_token'); });
+                .catch(() => {
+                    localStorage.removeItem('jwt_token');
+                    localStorage.removeItem('user_name');
+                    localStorage.removeItem('user_role');
+                });
         }
     });
 </script>
