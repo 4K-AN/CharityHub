@@ -1,62 +1,23 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout Donasi - CharityHub</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#005d90",
-                        "on-primary": "#ffffff",
-                        "primary-container": "#0077b6",
-                        "on-primary-container": "#f3f7ff",
-                        "secondary": "#00677d",
-                        "on-secondary": "#ffffff",
-                        "secondary-container": "#50d9fe",
-                        surface: "#f9f9ff",
-                        "surface-container-lowest": "#ffffff",
-                        "on-surface": "#111c2d",
-                        "on-surface-variant": "#404850",
-                        "surface-variant": "#d8e3fb",
-                        "outline-variant": "#bfc7d1",
-                        "error": "#ba1a1a",
-                        background: "#f9f9ff",
-                    }
-                }
-            }
-        }
-    </script>
+    @include('partials._head')
+    <title>Checkout Donasi — CharityHub</title>
     <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .payment-method {
-            transition: all 0.3s ease;
-        }
-        .payment-method.active {
-            background-color: #0077b6;
-            color: white;
-            border-color: #0077b6;
-        }
+        .payment-method { transition: all 0.3s ease; }
+        .payment-method:has(input:checked) { border-color: #0066CC; background: rgba(0,102,204,0.05); }
     </style>
 </head>
-<body class="bg-background text-on-surface font-[family-name:Inter] antialiased">
+<body class="bg-background text-on-surface antialiased">
 
-<!-- Top Navigation -->
-<nav class="bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-        <div class="text-xl font-bold text-primary flex items-center gap-2">
-<img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
-CharityHub</div>
-        <button onclick="history.back()" class="text-on-surface-variant hover:text-primary transition-colors">
+{{-- Minimal Nav for Checkout --}}
+<nav class="glass-strong border-b border-outline-variant/10 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 md:px-8 h-[72px] flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2.5">
+            <img src="/images/logo.svg" alt="CharityHub Logo" class="h-8 w-auto">
+            <span class="text-title-lg font-bold text-on-surface">Charity<span class="text-primary">Hub</span></span>
+        </a>
+        <button onclick="history.back()" class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-error hover:bg-error/5 transition-all">
             <span class="material-symbols-outlined">close</span>
         </button>
     </div>

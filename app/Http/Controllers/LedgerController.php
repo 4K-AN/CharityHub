@@ -17,10 +17,10 @@ class LedgerController extends Controller
      */
     public function storeDonation(Request $request, string $id)
     {
-        // 1. Tanya ke Campaign Service (Port 8002)
-        $response = Http::get("http://127.0.0.1:8002/api/campaigns/{$id}");
+        // Gunakan model Campaign lokal agar tidak error (fallback monolith)
+        $campaignData = \App\Models\Campaign::find($id);
 
-        if ($response->failed()) {
+        if (!$campaignData) {
             return response()->json([
                 'error' => [
                     'message' => 'Campaign tidak ditemukan',
@@ -28,9 +28,6 @@ class LedgerController extends Controller
                 ]
             ], 404);
         }
-
-        // 2. Ambil data JSON dari response
-        $campaignData = $response->json('data.campaign');
 
         // Campaign harus masih aktif untuk menerima donasi
         if ($campaignData['status'] !== 'Aktif') {
@@ -81,10 +78,10 @@ class LedgerController extends Controller
      */
     public function storeDisbursement(Request $request, string $id)
     {
-        // 1. Tanya ke Campaign Service (Port 8002)
-        $response = Http::get("http://127.0.0.1:8002/api/campaigns/{$id}");
+        // Gunakan model Campaign lokal agar tidak error (fallback monolith)
+        $campaignData = \App\Models\Campaign::find($id);
 
-        if ($response->failed()) {
+        if (!$campaignData) {
             return response()->json([
                 'error' => [
                     'message' => 'Campaign tidak ditemukan',
@@ -92,8 +89,6 @@ class LedgerController extends Controller
                 ]
             ], 404);
         }
-
-        $campaignData = $response->json('data.campaign');
         $userId = JWTAuth::parseToken()->getPayload()->get('sub') ?? auth()->id();
 
         // Pastikan hanya pemilik campaign yang bisa mencairkan
@@ -150,10 +145,10 @@ class LedgerController extends Controller
      */
     public function logs(string $id)
     {
-        // 1. Tanya ke Campaign Service (Port 8002)
-        $response = Http::get("http://127.0.0.1:8002/api/campaigns/{$id}");
+        // Gunakan model Campaign lokal agar tidak error (fallback monolith)
+        $campaign = \App\Models\Campaign::find($id);
 
-        if ($response->failed()) {
+        if (!$campaign) {
             return response()->json([
                 'error' => [
                     'message' => 'Campaign tidak ditemukan',
