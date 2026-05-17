@@ -211,9 +211,14 @@
 
     // Redirect if already logged in
     if (localStorage.getItem('jwt_token')) {
-        axios.get('/api/me', { headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` } })
+        axios.get('/api/profile', { headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` } })
             .then(() => { window.location.href = '/'; })
-            .catch(() => { localStorage.removeItem('jwt_token'); });
+            .catch(() => {
+                localStorage.removeItem('jwt_token');
+                localStorage.removeItem('user');
+                localStorage.removeItem('user_name');
+                localStorage.removeItem('user_role');
+            });
     }
 </script>
 </body></html>
