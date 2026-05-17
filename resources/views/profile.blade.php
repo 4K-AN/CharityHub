@@ -295,7 +295,7 @@
                 return axios.get('/api/campaigns', { headers });
             })
             .then(res => {
-                const campaigns = res.data.data || res.data;
+                const campaigns = res.data.campaigns || [];
                 const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
                 let allDonations = [];
                 let uniqueCampaigns = new Set();
