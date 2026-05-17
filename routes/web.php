@@ -27,6 +27,9 @@ Route::get('/profile', fn() => view('profile'));
 // Contact Page
 Route::get('/contact', fn() => view('contact'));
 
+// About Page
+Route::get('/about', fn() => view('welcome'));
+
 // Checkout / Donasi
 Route::get('/campaigns/{id}/donate', fn() => view('checkout'));
 

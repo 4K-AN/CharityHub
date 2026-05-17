@@ -112,20 +112,26 @@
 <!-- TopNavBar -->
 <nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md font-label-md text-label-md docked full-width top-0 sticky z-50 shadow-sm">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max-width mx-auto">
-<a class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim" href="#">CharityHub</a>
+<a class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim" href="/">CharityHub</a>
 <ul class="hidden md:flex gap-gutter items-center">
-<li><a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Home</a></li>
-<li><a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Campaigns</a></li>
-<li><a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">About</a></li>
-<li><a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Contact</a></li>
+<li><a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/">Home</a></li>
+<li><a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/#campaigns">Campaigns</a></li>
+<li><a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/about">About</a></li>
+<li><a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/contact">Contact</a></li>
 </ul>
-<div class="hidden md:block">
-<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200 font-label-md text-label-md" href="#">Login / Daftar</a>
+<div class="hidden md:block" id="auth-btn-desktop">
+<a class="inline-block bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity" href="/login">Login / Daftar</a>
 </div>
-<!-- Mobile Menu Button Placeholder -->
-<button class="md:hidden text-primary">
+<button class="md:hidden text-primary" onclick="document.getElementById('mobileMenuWelcome').classList.toggle('hidden')">
 <span class="material-symbols-outlined">menu</span>
 </button>
+</div>
+<div id="mobileMenuWelcome" class="hidden md:hidden bg-surface border-t border-outline-variant/20 px-margin-mobile py-4 space-y-3">
+<a class="block py-2 text-on-surface-variant hover:text-primary transition-colors" href="/">Home</a>
+<a class="block py-2 text-on-surface-variant hover:text-primary transition-colors" href="/#campaigns">Campaigns</a>
+<a class="block py-2 text-primary font-semibold" href="/about">About</a>
+<a class="block py-2 text-on-surface-variant hover:text-primary transition-colors" href="/contact">Contact</a>
+<div id="auth-btn-mobile-welcome"></div>
 </div>
 </nav>
 <main class="flex-grow">
@@ -231,4 +237,21 @@
 </ul>
 </div>
 </footer>
+<script>
+    // Dynamic auth button: show Profile if logged in, Login if not
+    (function() {
+        const token = localStorage.getItem('jwt_token');
+        const userName = localStorage.getItem('user_name') || 'User';
+        const userRole = localStorage.getItem('user_role') || '';
+        const desktopBtn = document.getElementById('auth-btn-desktop');
+        const mobileBtn = document.getElementById('auth-btn-mobile-welcome');
+        if (token) {
+            const profileLink = userRole === 'Campaigner' ? '/cms/dashboard' : '/profile';
+            desktopBtn.innerHTML = `<a href="${profileLink}" class="inline-flex items-center gap-2 bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"><span class="material-symbols-outlined text-[18px]">person</span>${userName}</a>`;
+            if (mobileBtn) mobileBtn.innerHTML = `<a class="block py-2 bg-primary text-on-primary text-center rounded-lg" href="${profileLink}">${userName} — Profil</a>`;
+        } else {
+            if (mobileBtn) mobileBtn.innerHTML = '<a class="block py-2 bg-primary text-on-primary text-center rounded-lg" href="/login">Login / Daftar</a>';
+        }
+    })();
+</script>
 </body></html>

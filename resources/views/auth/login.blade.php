@@ -186,6 +186,8 @@
                 // Save token to localStorage
                 localStorage.setItem('jwt_token', response.data.token);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
+                localStorage.setItem('user_name', response.data.user.name);
+                localStorage.setItem('user_role', response.data.user.role);
 
                 showAlert(`Login berhasil! Selamat datang, ${response.data.user.name}`, 'success');
 

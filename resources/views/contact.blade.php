@@ -134,9 +134,10 @@
         <div class="hidden md:flex items-center gap-gutter">
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/">Home</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/#campaigns">Campaigns</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/about">About</a>
             <a class="text-primary border-b-2 border-primary pb-1" href="/contact">Contact</a>
         </div>
-        <div class="hidden md:block">
+        <div class="hidden md:block" id="auth-btn-desktop">
             <a href="/login" class="inline-block bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
                 Login / Daftar
             </a>
@@ -149,8 +150,9 @@
     <div id="mobileMenu" class="hidden md:hidden bg-surface border-t border-outline-variant/20 px-margin-mobile py-4 space-y-3">
         <a class="block py-2 text-on-surface-variant hover:text-primary transition-colors" href="/">Home</a>
         <a class="block py-2 text-on-surface-variant hover:text-primary transition-colors" href="/#campaigns">Campaigns</a>
+        <a class="block py-2 text-on-surface-variant hover:text-primary transition-colors" href="/about">About</a>
         <a class="block py-2 text-primary font-semibold" href="/contact">Contact</a>
-        <a class="block py-2 bg-primary text-on-primary text-center rounded-lg" href="/login">Login / Daftar</a>
+        <div id="auth-btn-mobile"></div>
     </div>
 </nav>
 
@@ -411,6 +413,21 @@
             document.getElementById('successMessage').classList.remove('hidden');
         }, 1500);
     });
+    // Dynamic auth button
+    (function() {
+        const token = localStorage.getItem('jwt_token');
+        const userName = localStorage.getItem('user_name') || 'User';
+        const userRole = localStorage.getItem('user_role') || '';
+        const desktopBtn = document.getElementById('auth-btn-desktop');
+        const mobileBtn = document.getElementById('auth-btn-mobile');
+        if (token) {
+            const profileLink = userRole === 'Campaigner' ? '/cms/dashboard' : '/profile';
+            desktopBtn.innerHTML = `<a href="${profileLink}" class="inline-flex items-center gap-2 bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"><span class="material-symbols-outlined text-[18px]">person</span>${userName}</a>`;
+            if (mobileBtn) mobileBtn.innerHTML = `<a class="block py-2 bg-primary text-on-primary text-center rounded-lg" href="${profileLink}">${userName} — Profil</a>`;
+        } else {
+            if (mobileBtn) mobileBtn.innerHTML = '<a class="block py-2 bg-primary text-on-primary text-center rounded-lg" href="/login">Login / Daftar</a>';
+        }
+    })();
 </script>
 </body>
 </html>

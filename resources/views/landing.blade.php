@@ -117,7 +117,7 @@
 <div class="hidden md:flex items-center gap-gutter">
 <a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/">Home</a>
 <a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/#campaigns">Campaigns</a>
-<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">About</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/about">About</a>
 <a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/contact">Contact</a>
 </div>
 <div class="hidden md:block">
@@ -134,8 +134,8 @@
 <div class="flex flex-col px-margin-mobile py-4 gap-1 max-w-container-max-width mx-auto">
 <a class="px-4 py-3 rounded-xl text-primary font-semibold bg-primary/5 transition-colors" href="/">Home</a>
 <a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/#campaigns">Campaigns</a>
-<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="#">About</a>
-<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="#">Contact</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/about">About</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/contact">Contact</a>
 <hr class="border-outline-variant/20 my-2">
 <a href="/login" class="px-4 py-3 rounded-xl bg-primary text-on-primary text-center font-semibold hover:opacity-90 transition-opacity">
     Login / Daftar

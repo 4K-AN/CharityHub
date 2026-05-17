@@ -120,7 +120,7 @@
 <div class="hidden md:flex gap-gutter items-center">
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/">Home</a>
 <a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="/#campaigns">Campaigns</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">About</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/about">About</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/contact">Contact</a>
 </div>
 <div class="hidden md:block">
@@ -135,8 +135,8 @@
 <div class="flex flex-col px-margin-mobile py-4 gap-1 max-w-container-max-width mx-auto">
 <a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/">Home</a>
 <a class="px-4 py-3 rounded-xl text-primary font-semibold bg-primary/5 transition-colors" href="/#campaigns">Campaigns</a>
-<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="#">About</a>
-<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="#">Contact</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/about">About</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/contact">Contact</a>
 <hr class="border-outline-variant/20 my-2">
 <a href="/login" class="px-4 py-3 rounded-xl bg-primary text-on-primary text-center font-semibold hover:opacity-90 transition-opacity">
     Login / Daftar
