@@ -111,21 +111,36 @@
 <!-- TopNavBar -->
 <nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md text-primary dark:text-primary-fixed-dim font-label-md text-label-md docked full-width top-0 sticky z-50 shadow-sm">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max-width mx-auto">
-<div class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim">
+<a href="/" class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim no-underline">
                 CharityHub
-            </div>
+</a>
 <div class="hidden md:flex items-center gap-gutter">
 <a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/">Home</a>
-<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#campaigns">Campaigns</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="/#campaigns">Campaigns</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">About</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Contact</a>
 </div>
 <div class="hidden md:block">
 <a href="/login" class="inline-block bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
     Login / Daftar
 </a>
 </div>
-<button class="md:hidden text-primary">
-<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<button id="mobile-menu-btn" class="md:hidden text-primary p-2 rounded-lg hover:bg-primary/10 transition-colors" aria-label="Toggle Menu">
+<span class="material-symbols-outlined text-[28px]" id="menu-icon">menu</span>
 </button>
+</div>
+<!-- Mobile Menu Drawer -->
+<div id="mobile-menu" class="hidden md:hidden border-t border-outline-variant/20 bg-surface/95 backdrop-blur-md">
+<div class="flex flex-col px-margin-mobile py-4 gap-1 max-w-container-max-width mx-auto">
+<a class="px-4 py-3 rounded-xl text-primary font-semibold bg-primary/5 transition-colors" href="/">Home</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/#campaigns">Campaigns</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="#">About</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="#">Contact</a>
+<hr class="border-outline-variant/20 my-2">
+<a href="/login" class="px-4 py-3 rounded-xl bg-primary text-on-primary text-center font-semibold hover:opacity-90 transition-opacity">
+    Login / Daftar
+</a>
+</div>
 </div>
 </nav>
 <!-- Main Content -->
@@ -427,6 +442,39 @@
             .catch(error => {
                 console.error("Error fetching campaigns:", error);
             });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                menuIcon.textContent = mobileMenu.classList.contains('hidden') ? 'menu' : 'close';
+            });
+        }
+
+        // Auth-aware Navbar: show user name if logged in
+        const token = localStorage.getItem('jwt_token');
+        if (token) {
+            const loginBtnDesktop = document.querySelector('a[href="/login"].hidden.md\\:block, .hidden.md\\:block a[href="/login"]');
+            const loginBtnMobile = document.querySelector('#mobile-menu a[href="/login"]');
+            
+            axios.get('/api/me', { headers: { Authorization: `Bearer ${token}` } })
+                .then(res => {
+                    const user = res.data.user;
+                    if (loginBtnDesktop) {
+                        loginBtnDesktop.closest('.hidden.md\\:block') 
+                            ? loginBtnDesktop.closest('.hidden.md\\:block').innerHTML = `<a href="${user.role === 'Campaigner' ? '/cms/dashboard' : '/profile'}" class="inline-block bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">👤 ${user.name}</a>`
+                            : null;
+                    }
+                    if (loginBtnMobile) {
+                        loginBtnMobile.textContent = `👤 ${user.name}`;
+                        loginBtnMobile.href = user.role === 'Campaigner' ? '/cms/dashboard' : '/profile';
+                    }
+                })
+                .catch(() => { localStorage.removeItem('jwt_token'); });
+        }
     });
 </script>
 </body></html>

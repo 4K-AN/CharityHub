@@ -114,15 +114,33 @@
 <!-- TopNavBar -->
 <nav class="bg-surface/80 shadow-sm docked full-width top-0 sticky z-50 backdrop-blur-md">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max-width mx-auto">
-<div class="font-display-lg text-headline-md font-bold text-primary">
+<a href="/" class="font-display-lg text-headline-md font-bold text-primary no-underline">
                 CharityHub
-            </div>
+</a>
 <div class="hidden md:flex gap-gutter items-center">
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/">Home</a>
 <a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="/#campaigns">Campaigns</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">About</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Contact</a>
 </div>
-<div>
+<div class="hidden md:block">
 <a class="inline-block bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity" href="/login">Login / Daftar</a>
+</div>
+<button id="mobile-menu-btn" class="md:hidden text-primary p-2 rounded-lg hover:bg-primary/10 transition-colors" aria-label="Toggle Menu">
+<span class="material-symbols-outlined text-[28px]" id="menu-icon">menu</span>
+</button>
+</div>
+<!-- Mobile Menu Drawer -->
+<div id="mobile-menu" class="hidden md:hidden border-t border-outline-variant/20 bg-surface/95 backdrop-blur-md">
+<div class="flex flex-col px-margin-mobile py-4 gap-1 max-w-container-max-width mx-auto">
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="/">Home</a>
+<a class="px-4 py-3 rounded-xl text-primary font-semibold bg-primary/5 transition-colors" href="/#campaigns">Campaigns</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="#">About</a>
+<a class="px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors" href="#">Contact</a>
+<hr class="border-outline-variant/20 my-2">
+<a href="/login" class="px-4 py-3 rounded-xl bg-primary text-on-primary text-center font-semibold hover:opacity-90 transition-opacity">
+    Login / Daftar
+</a>
 </div>
 </div>
 </nav>
@@ -319,6 +337,37 @@
             console.error("Error loading campaign data:", err);
             alert("Gagal memuat data kampanye.");
         });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                menuIcon.textContent = mobileMenu.classList.contains('hidden') ? 'menu' : 'close';
+            });
+        }
+
+        // Auth-aware Navbar
+        const token = localStorage.getItem('jwt_token');
+        if (token) {
+            axios.get('/api/me', { headers: { Authorization: `Bearer ${token}` } })
+                .then(res => {
+                    const user = res.data.user;
+                    const desktopBtn = document.querySelector('.hidden.md\\:block a[href="/login"]');
+                    if (desktopBtn) {
+                        desktopBtn.textContent = `👤 ${user.name}`;
+                        desktopBtn.href = user.role === 'Campaigner' ? '/cms/dashboard' : '/profile';
+                    }
+                    const mobileBtn = document.querySelector('#mobile-menu a[href="/login"]');
+                    if (mobileBtn) {
+                        mobileBtn.textContent = `👤 ${user.name}`;
+                        mobileBtn.href = user.role === 'Campaigner' ? '/cms/dashboard' : '/profile';
+                    }
+                })
+                .catch(() => { localStorage.removeItem('jwt_token'); });
+        }
     });
 </script>
 </body></html>
