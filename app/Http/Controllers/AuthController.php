@@ -25,8 +25,10 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors(),
+                'error' => [
+                    'message' => $validator->errors()->first(),
+                    'code'    => 422
+                ]
             ], 422);
         }
 
@@ -40,10 +42,11 @@ class AuthController extends Controller
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
-            'success' => true,
             'message' => 'Registrasi berhasil',
-            'user'    => $user,
-            'token'   => $token,
+            'data'    => [
+                'user'  => $user,
+                'token' => $token,
+            ]
         ], 201);
     }
 
@@ -60,8 +63,10 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors(),
+                'error' => [
+                    'message' => $validator->errors()->first(),
+                    'code'    => 422
+                ]
             ], 422);
         }
 
@@ -69,18 +74,21 @@ class AuthController extends Controller
 
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json([
-                'success' => false,
-                'message' => 'Email atau password salah',
+                'error' => [
+                    'message' => 'Email atau password salah',
+                    'code'    => 401
+                ]
             ], 401);
         }
 
         $user = auth()->user();
 
         return response()->json([
-            'success' => true,
             'message' => 'Login berhasil',
-            'user'    => $user,
-            'token'   => $token,
+            'data'    => [
+                'user'  => $user,
+                'token' => $token,
+            ]
         ]);
     }
 
@@ -93,8 +101,8 @@ class AuthController extends Controller
         JWTAuth::invalidate(JWTAuth::getToken());
 
         return response()->json([
-            'success' => true,
             'message' => 'Logout berhasil',
+            'data'    => []
         ]);
     }
 
@@ -105,8 +113,10 @@ class AuthController extends Controller
     public function profile()
     {
         return response()->json([
-            'success' => true,
-            'user'    => auth()->user(),
+            'message' => 'Profil berhasil diambil',
+            'data'    => [
+                'user' => auth()->user(),
+            ]
         ]);
     }
 }

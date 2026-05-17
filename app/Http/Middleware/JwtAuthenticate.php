@@ -21,24 +21,32 @@ class JwtAuthenticate
 
             if (!$user) {
                 return response()->json([
-                    'success' => false,
-                    'message' => 'User tidak ditemukan',
+                    'error' => [
+                        'message' => 'User tidak ditemukan',
+                        'code'    => 404
+                    ]
                 ], 404);
             }
         } catch (TokenExpiredException $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Token sudah kedaluwarsa',
+                'error' => [
+                    'message' => 'Token sudah kedaluwarsa',
+                    'code'    => 401
+                ]
             ], 401);
         } catch (TokenInvalidException $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Token tidak valid',
+                'error' => [
+                    'message' => 'Token tidak valid',
+                    'code'    => 401
+                ]
             ], 401);
         } catch (JWTException $e) {
             return response()->json([
-                'success' => false,
-                'message' => 'Token tidak ditemukan',
+                'error' => [
+                    'message' => 'Token tidak ditemukan',
+                    'code'    => 401
+                ]
             ], 401);
         }
 

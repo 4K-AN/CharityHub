@@ -21,8 +21,10 @@ class CampaignController extends Controller
             ->get();
 
         return response()->json([
-            'success'   => true,
-            'campaigns' => $campaigns,
+            'message' => 'Daftar campaign berhasil diambil',
+            'data'    => [
+                'campaigns' => $campaigns,
+            ]
         ]);
     }
 
@@ -41,8 +43,10 @@ class CampaignController extends Controller
             ->get();
 
         return response()->json([
-            'success'   => true,
-            'campaigns' => $campaigns,
+            'message' => 'Hasil pencarian campaign',
+            'data'    => [
+                'campaigns' => $campaigns,
+            ]
         ]);
     }
 
@@ -62,8 +66,10 @@ class CampaignController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors(),
+                'error' => [
+                    'message' => $validator->errors()->first(),
+                    'code'    => 422
+                ]
             ], 422);
         }
 
@@ -78,9 +84,10 @@ class CampaignController extends Controller
         $campaign = Campaign::create($data);
 
         return response()->json([
-            'success'  => true,
             'message'  => 'Campaign berhasil dibuat',
-            'campaign' => $campaign->load('user:id,name'),
+            'data'     => [
+                'campaign' => $campaign->load('user:id,name'),
+            ]
         ], 201);
     }
 
@@ -95,14 +102,18 @@ class CampaignController extends Controller
 
         if (!$campaign) {
             return response()->json([
-                'success' => false,
-                'message' => 'Campaign tidak ditemukan',
+                'error' => [
+                    'message' => 'Campaign tidak ditemukan',
+                    'code'    => 404
+                ]
             ], 404);
         }
 
         return response()->json([
-            'success'  => true,
-            'campaign' => $campaign,
+            'message' => 'Detail campaign berhasil diambil',
+            'data'    => [
+                'campaign' => $campaign,
+            ]
         ]);
     }
 
@@ -117,16 +128,20 @@ class CampaignController extends Controller
 
         if (!$campaign) {
             return response()->json([
-                'success' => false,
-                'message' => 'Campaign tidak ditemukan',
+                'error' => [
+                    'message' => 'Campaign tidak ditemukan',
+                    'code'    => 404
+                ]
             ], 404);
         }
 
         // Pastikan hanya pemilik campaign yang bisa update
         if ($campaign->user_id !== auth()->id()) {
             return response()->json([
-                'success' => false,
-                'message' => 'Anda tidak memiliki akses untuk mengubah campaign ini',
+                'error' => [
+                    'message' => 'Anda tidak memiliki akses untuk mengubah campaign ini',
+                    'code'    => 403
+                ]
             ], 403);
         }
 
@@ -141,8 +156,10 @@ class CampaignController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors(),
+                'error' => [
+                    'message' => $validator->errors()->first(),
+                    'code'    => 422
+                ]
             ], 422);
         }
 
@@ -155,9 +172,10 @@ class CampaignController extends Controller
         $campaign->update($data);
 
         return response()->json([
-            'success'  => true,
             'message'  => 'Campaign berhasil diperbarui',
-            'campaign' => $campaign->fresh()->load('user:id,name'),
+            'data'     => [
+                'campaign' => $campaign->fresh()->load('user:id,name'),
+            ]
         ]);
     }
 
@@ -172,23 +190,27 @@ class CampaignController extends Controller
 
         if (!$campaign) {
             return response()->json([
-                'success' => false,
-                'message' => 'Campaign tidak ditemukan',
+                'error' => [
+                    'message' => 'Campaign tidak ditemukan',
+                    'code'    => 404
+                ]
             ], 404);
         }
 
         if ($campaign->user_id !== auth()->id()) {
             return response()->json([
-                'success' => false,
-                'message' => 'Anda tidak memiliki akses untuk menghapus campaign ini',
+                'error' => [
+                    'message' => 'Anda tidak memiliki akses untuk menghapus campaign ini',
+                    'code'    => 403
+                ]
             ], 403);
         }
 
         $campaign->delete();
 
         return response()->json([
-            'success' => true,
             'message' => 'Campaign berhasil dihapus',
+            'data'    => []
         ]);
     }
 }

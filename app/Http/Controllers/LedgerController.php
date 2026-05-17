@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Campaign;
 use App\Models\Donation;
 use App\Models\Disbursement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LedgerController extends Controller
 {
@@ -16,20 +17,28 @@ class LedgerController extends Controller
      */
     public function storeDonation(Request $request, string $id)
     {
-        $campaign = Campaign::find($id);
+        // 1. Tanya ke Campaign Service (Port 8002)
+        $response = Http::get("http://127.0.0.1:8002/api/campaigns/{$id}");
 
-        if (!$campaign) {
+        if ($response->failed()) {
             return response()->json([
-                'success' => false,
-                'message' => 'Campaign tidak ditemukan',
+                'error' => [
+                    'message' => 'Campaign tidak ditemukan',
+                    'code'    => 404
+                ]
             ], 404);
         }
 
+        // 2. Ambil data JSON dari response
+        $campaignData = $response->json('data.campaign');
+
         // Campaign harus masih aktif untuk menerima donasi
-        if ($campaign->status !== 'Aktif') {
+        if ($campaignData['status'] !== 'Aktif') {
             return response()->json([
-                'success' => false,
-                'message' => 'Campaign sudah tidak aktif, tidak bisa menerima donasi',
+                'error' => [
+                    'message' => 'Campaign sudah tidak aktif, tidak bisa menerima donasi',
+                    'code'    => 400
+                ]
             ], 400);
         }
 
@@ -41,23 +50,28 @@ class LedgerController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors(),
+                'error' => [
+                    'message' => $validator->errors()->first(),
+                    'code'    => 422
+                ]
             ], 422);
         }
 
+        $userId = JWTAuth::parseToken()->getPayload()->get('sub') ?? auth()->id();
+
         $donation = Donation::create([
-            'campaign_id' => $campaign->id,
-            'user_id'     => auth()->id(),
+            'campaign_id' => $campaignData['id'],
+            'user_id'     => $userId,
             'amount'      => $request->amount,
             'donor_name'  => $request->donor_name,
             'message'     => $request->message,
         ]);
 
         return response()->json([
-            'success'  => true,
-            'message'  => 'Donasi berhasil dicatat',
-            'donation' => $donation,
+            'message' => 'Donasi berhasil dicatat',
+            'data'    => [
+                'donation' => $donation,
+            ]
         ], 201);
     }
 
@@ -67,20 +81,28 @@ class LedgerController extends Controller
      */
     public function storeDisbursement(Request $request, string $id)
     {
-        $campaign = Campaign::find($id);
+        // 1. Tanya ke Campaign Service (Port 8002)
+        $response = Http::get("http://127.0.0.1:8002/api/campaigns/{$id}");
 
-        if (!$campaign) {
+        if ($response->failed()) {
             return response()->json([
-                'success' => false,
-                'message' => 'Campaign tidak ditemukan',
+                'error' => [
+                    'message' => 'Campaign tidak ditemukan',
+                    'code'    => 404
+                ]
             ], 404);
         }
 
+        $campaignData = $response->json('data.campaign');
+        $userId = JWTAuth::parseToken()->getPayload()->get('sub') ?? auth()->id();
+
         // Pastikan hanya pemilik campaign yang bisa mencairkan
-        if ($campaign->user_id !== auth()->id()) {
+        if ($campaignData['user_id'] != $userId) {
             return response()->json([
-                'success' => false,
-                'message' => 'Anda tidak memiliki akses untuk mencairkan dana campaign ini',
+                'error' => [
+                    'message' => 'Anda tidak memiliki akses untuk mencairkan dana campaign ini',
+                    'code'    => 403
+                ]
             ], 403);
         }
 
@@ -92,14 +114,16 @@ class LedgerController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors(),
+                'error' => [
+                    'message' => $validator->errors()->first(),
+                    'code'    => 422
+                ]
             ], 422);
         }
 
         $data = [
-            'campaign_id' => $campaign->id,
-            'user_id'     => auth()->id(),
+            'campaign_id' => $campaignData['id'],
+            'user_id'     => $userId,
             'amount'      => $request->amount,
             'description' => $request->description,
         ];
@@ -112,9 +136,10 @@ class LedgerController extends Controller
         $disbursement = Disbursement::create($data);
 
         return response()->json([
-            'success'      => true,
-            'message'      => 'Pencairan dana berhasil dicatat',
-            'disbursement' => $disbursement,
+            'message' => 'Pencairan dana berhasil dicatat',
+            'data'    => [
+                'disbursement' => $disbursement,
+            ]
         ], 201);
     }
 
@@ -125,12 +150,15 @@ class LedgerController extends Controller
      */
     public function logs(string $id)
     {
-        $campaign = Campaign::find($id);
+        // 1. Tanya ke Campaign Service (Port 8002)
+        $response = Http::get("http://127.0.0.1:8002/api/campaigns/{$id}");
 
-        if (!$campaign) {
+        if ($response->failed()) {
             return response()->json([
-                'success' => false,
-                'message' => 'Campaign tidak ditemukan',
+                'error' => [
+                    'message' => 'Campaign tidak ditemukan',
+                    'code'    => 404
+                ]
             ], 404);
         }
 
@@ -144,10 +172,12 @@ class LedgerController extends Controller
             ->get();
 
         return response()->json([
-            'success'       => true,
-            'campaign_id'   => (int) $id,
-            'donations'     => $donations,
-            'disbursements' => $disbursements,
+            'message' => 'Log transparansi berhasil diambil',
+            'data'    => [
+                'campaign_id'   => (int) $id,
+                'donations'     => $donations,
+                'disbursements' => $disbursements,
+            ]
         ]);
     }
 }

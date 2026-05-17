@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RoleMiddleware
 {
@@ -13,12 +14,16 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, string $role)
     {
-        $user = auth()->user();
+        // 1. Ambil payload dari Token secara langsung (Tanpa Query Database)
+        $payload = JWTAuth::parseToken()->getPayload();
+        $userRole = $payload->get('role');
 
-        if (!$user || $user->role !== $role) {
+        if ($userRole !== $role) {
             return response()->json([
-                'success' => false,
-                'message' => "Akses ditolak. Hanya role {$role} yang diizinkan.",
+                'error' => [
+                    'message' => "Akses ditolak. Hanya role {$role} yang diizinkan.",
+                    'code' => 403
+                ]
             ], 403);
         }
 
