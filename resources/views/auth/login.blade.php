@@ -49,8 +49,14 @@
 <!-- Minimal Navbar -->
 <nav class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 max-w-[1280px] mx-auto">
-<a href="/" class="text-[24px] font-bold text-primary no-underline">CharityHub</a>
-<a href="/register" class="text-[14px] text-primary hover:underline font-medium">Belum punya akun? Daftar</a>
+<div class="flex items-center gap-3">
+    <a href="/" class="flex items-center gap-1 text-[14px] text-on-surface-variant hover:text-primary transition-colors font-medium bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/50">
+        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+        Kembali
+    </a>
+    <a href="/" class="text-[24px] font-bold text-primary no-underline ml-2">CharityHub</a>
+</div>
+<a href="/register" class="text-[14px] text-primary hover:underline font-medium hidden sm:inline-block">Belum punya akun? Daftar</a>
 </div>
 </nav>
 
