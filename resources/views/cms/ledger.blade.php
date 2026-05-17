@@ -375,10 +375,13 @@
     });
 
     function logoutAction() {
-        localStorage.removeItem('jwt_token');
-        localStorage.removeItem('user_name');
-        localStorage.removeItem('user_role');
-        window.location.href = '/login';
+        axios.post('/api/logout', {}, { headers: { Authorization: `Bearer ${token}` } }).finally(() => {
+            localStorage.removeItem('jwt_token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_role');
+            window.location.href = '/login';
+        });
     }
 </script>
 </body></html>

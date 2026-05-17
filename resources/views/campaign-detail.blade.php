@@ -189,10 +189,10 @@
 <span id="campaign-deadline" class="font-body-md text-body-md text-on-surface-variant">Menghitung Waktu...</span>
 </div>
 </div>
-<button class="w-full py-4 rounded-xl font-label-md text-label-md font-bold text-white transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md" style="background-color: #2d6a4f;">
+<a id="donate-btn" href="#" class="w-full py-4 rounded-xl font-label-md text-label-md font-bold text-white transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md" style="background-color: #2d6a4f;">
 <span>Donasi Sekarang</span>
 <span class="material-symbols-outlined" data-icon="favorite">favorite</span>
-</button>
+</a>
 <p class="font-label-sm text-label-sm text-outline text-center mt-4">Transaksi dijamin aman dan transparan.</p>
 </div>
 </div>
@@ -245,7 +245,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const campaignId = window.location.pathname.split('/').pop();
+        const campaignId = window.location.pathname.split('/')[2];
         
         const formatRupiah = (number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
         const formatDate = (dateString) => {
@@ -253,13 +253,16 @@
             return new Date(dateString).toLocaleDateString('id-ID', options);
         };
 
+        // Set donate button link
+        document.getElementById('donate-btn').href = `/campaigns/${campaignId}/donate`;
+
         // Fetch Campaign Detail & Logs
         Promise.all([
-            axios.get(`/api/campaigns`), // Kita butuh find karena API belum ada show endpoint
+            axios.get(`/api/campaigns/${campaignId}`),
             axios.get(`/api/campaigns/${campaignId}/logs`)
         ])
-        .then(([campaignsResponse, logsResponse]) => {
-            const campaign = campaignsResponse.data.campaigns.find(c => c.id == campaignId);
+        .then(([campaignResponse, logsResponse]) => {
+            const campaign = campaignResponse.data.campaign;
             const logs = logsResponse.data;
             
             if (!campaign) {

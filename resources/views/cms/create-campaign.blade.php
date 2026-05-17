@@ -117,7 +117,7 @@
 <!-- Sidebar -->
 <aside class="w-64 bg-surface-container-lowest border-r border-outline-variant/20 flex flex-col hidden md:flex sticky top-0 h-screen">
 <div class="p-6">
-<a class="flex items-center gap-2 text-primary" href="#">
+<a class="flex items-center gap-2 text-primary" href="/cms/dashboard">
 <span class="material-symbols-outlined fill text-3xl">volunteer_activism</span>
 <span class="font-headline-md text-headline-md font-bold">CharityHub Admin</span>
 </a>
@@ -300,10 +300,13 @@
     });
 
     function logoutAction() {
-        localStorage.removeItem('jwt_token');
-        localStorage.removeItem('user_name');
-        localStorage.removeItem('user_role');
-        window.location.href = '/login';
+        axios.post('/api/logout', {}, { headers: { Authorization: `Bearer ${token}` } }).finally(() => {
+            localStorage.removeItem('jwt_token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_role');
+            window.location.href = '/login';
+        });
     }
 </script>
 

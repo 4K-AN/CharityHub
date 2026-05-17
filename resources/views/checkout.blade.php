@@ -54,7 +54,7 @@
 <nav class="bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         <div class="text-xl font-bold text-primary">CharityHub</div>
-        <button class="text-on-surface-variant hover:text-primary transition-colors">
+        <button onclick="history.back()" class="text-on-surface-variant hover:text-primary transition-colors">
             <span class="material-symbols-outlined">close</span>
         </button>
     </div>
