@@ -24,6 +24,9 @@ Route::get('/register', fn() => view('auth.register'));
 // User Profile
 Route::get('/profile', fn() => view('profile'));
 
+// Contact Page
+Route::get('/contact', fn() => view('contact'));
+
 // Checkout / Donasi
 Route::get('/campaigns/{id}/donate', fn() => view('checkout'));
 

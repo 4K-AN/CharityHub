@@ -121,7 +121,7 @@
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/">Home</a>
 <a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="/#campaigns">Campaigns</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">About</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Contact</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/contact">Contact</a>
 </div>
 <div class="hidden md:block">
 <a class="inline-block bg-primary text-on-primary font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity" href="/login">Login / Daftar</a>
