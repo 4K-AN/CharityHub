@@ -273,7 +273,7 @@
         // Fetch user profile
         axios.get('/api/profile', { headers })
             .then(res => {
-                const user = res.data.user;
+                const user = res.data.data.user;
 
                 // Fill profile data
                 const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
@@ -296,7 +296,7 @@
                 return axios.get('/api/campaigns', { headers });
             })
             .then(res => {
-                const campaigns = res.data.campaigns || [];
+                const campaigns = res.data.data.campaigns || [];
                 const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
                 let allDonations = [];
                 let uniqueCampaigns = new Set();

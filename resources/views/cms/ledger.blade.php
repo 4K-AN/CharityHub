@@ -278,7 +278,7 @@ CharityHub Admin</h1>
 
     axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
-            if (res.data.user.role !== 'Campaigner') window.location.href = '/';
+            if (res.data.data.user.role !== 'Campaigner') window.location.href = '/';
             loadData();
         })
         .catch(() => window.location.href = '/login');
@@ -287,7 +287,7 @@ CharityHub Admin</h1>
         try {
             // Load Campaign Info
             const campRes = await axios.get(`/api/campaigns/${campaignId}`);
-            const campaign = campRes.data.campaign;
+            const campaign = campRes.data.data.campaign;
             
             document.getElementById('campaignTitle').textContent = campaign.title;
             const statusEl = document.getElementById('campaignStatus');
@@ -300,14 +300,13 @@ CharityHub Admin</h1>
                 statusEl.className = 'px-3 py-1 bg-gray-200 text-gray-700 text-label-sm font-label-sm rounded-full border border-gray-300 flex items-center gap-1';
             }
 
-            // Calculate total from donations (since backend returns raw)
-            totalCollectedAmount = (campaign.donations || []).reduce((sum, d) => sum + parseFloat(d.amount), 0);
-
-            // Load Logs
+            // Load Logs from Ledger Service
             const logRes = await axios.get(`/api/campaigns/${campaignId}/logs`);
-            const logs = logRes.data;
+            const logsData = logRes.data.data;
             
-            const disbursements = logs.disbursements || [];
+            const disbursements = logsData.disbursements || [];
+            const donations = logsData.donations || [];
+            totalCollectedAmount = donations.reduce((sum, d) => sum + parseFloat(d.amount), 0);
             totalDisbursedAmount = disbursements.reduce((sum, d) => sum + parseFloat(d.amount), 0);
 
             document.getElementById('totalDonations').textContent = formatCurrency(totalCollectedAmount);
@@ -372,7 +371,7 @@ CharityHub Admin</h1>
             document.getElementById('disbursementForm').reset();
             loadData();
         } catch (err) {
-            alert('Error: ' + (err.response?.data?.message || err.message));
+            alert('Error: ' + (err.response?.data?.error?.message || err.message));
         }
     });
 
@@ -388,7 +387,7 @@ CharityHub Admin</h1>
             alert('Kampanye berhasil ditutup.');
             loadData();
         } catch (err) {
-            alert('Error: ' + (err.response?.data?.message || err.message));
+            alert('Error: ' + (err.response?.data?.error?.message || err.message));
         }
     }
 

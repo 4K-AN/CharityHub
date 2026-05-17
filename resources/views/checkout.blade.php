@@ -284,7 +284,7 @@ CharityHub</div>
 
             // Fetch campaign
             const res = await axios.get(`/api/campaigns/${campaignId}`);
-            const campaign = res.data.campaign;
+            const campaign = res.data.data.campaign;
             
             document.getElementById('campaignTitle').textContent = campaign.title;
             document.getElementById('campaignIdDisplay').textContent = 'ID Kampanye: #CH-' + campaign.id.toString().padStart(4, '0');
@@ -383,7 +383,7 @@ CharityHub</div>
             alert('Donasi berhasil! Terima kasih atas kebaikan Anda.');
             window.location.href = `/campaigns/${campaignId}`;
         } catch (error) {
-            const msg = error.response?.data?.message || error.message;
+            const msg = error.response?.data?.error?.message || error.message;
             alert('Error: ' + msg);
             btn.disabled = false;
             btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">favorite</span> Lanjut ke Pembayaran';

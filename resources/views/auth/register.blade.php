@@ -206,22 +206,21 @@ CharityHub</a>
                 role: document.getElementById('role').value,
             });
 
-            if (response.data.success) {
-                localStorage.setItem('jwt_token', response.data.token);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
+            const resData = response.data.data;
+                localStorage.setItem('jwt_token', resData.token);
+                localStorage.setItem('user', JSON.stringify(resData.user));
 
-                showAlert(`Registrasi berhasil! Selamat datang, ${response.data.user.name}`, 'success');
+                showAlert(`Registrasi berhasil! Selamat datang, ${resData.user.name}`, 'success');
 
                 setTimeout(() => {
-                    if (response.data.user.role === 'Campaigner') {
+                    if (resData.user.role === 'Campaigner') {
                         window.location.href = '/cms/dashboard';
                     } else {
                         window.location.href = '/';
                     }
                 }, 1000);
-            }
         } catch (error) {
-            const msg = error.response?.data?.message || 'Terjadi kesalahan. Silakan coba lagi.';
+            const msg = error.response?.data?.error?.message || 'Terjadi kesalahan. Silakan coba lagi.';
             showAlert(msg, 'error');
             btn.disabled = false;
             btnText.textContent = 'Daftar Sekarang';

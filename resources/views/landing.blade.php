@@ -373,7 +373,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         axios.get('/api/campaigns')
             .then(response => {
-                const campaigns = response.data.campaigns;
+                const campaigns = response.data.data.campaigns;
                 const container = document.getElementById('campaign-list');
                 
                 if (campaigns.length === 0) {
@@ -390,10 +390,9 @@
                     }
                     
                     filteredCampaigns.forEach(campaign => {
-                        // Calculate total donation manually (frontend side calculation rule)
-                        const totalDonations = campaign.donations.reduce((sum, d) => sum + parseFloat(d.amount), 0);
+                        const totalDonations = 0; // Donations now in Ledger Service, fetched separately if needed
                         const goal = parseFloat(campaign.goal_amount);
-                        const progress = Math.min((totalDonations / goal) * 100, 100).toFixed(1);
+                        const progress = 0; // Will need separate ledger call for accurate progress
 
                         // Formatter
                         const formatRupiah = (number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
@@ -485,7 +484,7 @@
         if (token) {
             axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
                 .then(res => {
-                    const user = res.data.user;
+                    const user = res.data.data.user;
                     // Update localStorage
                     localStorage.setItem('user_name', user.name);
                     localStorage.setItem('user_role', user.role);

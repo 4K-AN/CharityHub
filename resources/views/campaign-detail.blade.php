@@ -263,8 +263,8 @@
             axios.get(`/api/campaigns/${campaignId}/logs`)
         ])
         .then(([campaignResponse, logsResponse]) => {
-            const campaign = campaignResponse.data.campaign;
-            const logs = logsResponse.data;
+            const campaign = campaignResponse.data.data.campaign;
+            const logsData = logsResponse.data.data;
             
             if (!campaign) {
                 alert("Campaign tidak ditemukan!");
@@ -273,8 +273,8 @@
             }
 
             // Calculations
-            const donations = logs.donations || [];
-            const disbursements = logs.disbursements || [];
+            const donations = logsData.donations || [];
+            const disbursements = logsData.disbursements || [];
             
             const totalDonations = donations.reduce((sum, d) => sum + parseFloat(d.amount), 0);
             const goal = parseFloat(campaign.goal_amount);
@@ -360,7 +360,7 @@
         if (token) {
             axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
                 .then(res => {
-                    const user = res.data.user;
+                    const user = res.data.data.user;
                     localStorage.setItem('user_name', user.name);
                     localStorage.setItem('user_role', user.role);
                     const profileLink = user.role === 'Campaigner' ? '/cms/dashboard' : '/profile';

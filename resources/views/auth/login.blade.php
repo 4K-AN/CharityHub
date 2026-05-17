@@ -190,26 +190,25 @@ CharityHub</a>
                 password: document.getElementById('password').value,
             });
 
-            if (response.data.success) {
+            const resData = response.data.data;
                 // Save token to localStorage
-                localStorage.setItem('jwt_token', response.data.token);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-                localStorage.setItem('user_name', response.data.user.name);
-                localStorage.setItem('user_role', response.data.user.role);
+                localStorage.setItem('jwt_token', resData.token);
+                localStorage.setItem('user', JSON.stringify(resData.user));
+                localStorage.setItem('user_name', resData.user.name);
+                localStorage.setItem('user_role', resData.user.role);
 
-                showAlert(`Login berhasil! Selamat datang, ${response.data.user.name}`, 'success');
+                showAlert(`Login berhasil! Selamat datang, ${resData.user.name}`, 'success');
 
                 // Redirect based on role
                 setTimeout(() => {
-                    if (response.data.user.role === 'Campaigner') {
+                    if (resData.user.role === 'Campaigner') {
                         window.location.href = '/cms/dashboard';
                     } else {
                         window.location.href = '/';
                     }
                 }, 1000);
-            }
         } catch (error) {
-            const msg = error.response?.data?.message || 'Terjadi kesalahan. Silakan coba lagi.';
+            const msg = error.response?.data?.error?.message || 'Terjadi kesalahan. Silakan coba lagi.';
             showAlert(msg, 'error');
             btn.disabled = false;
             btnText.textContent = 'Masuk';

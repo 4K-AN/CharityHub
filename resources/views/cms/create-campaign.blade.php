@@ -244,7 +244,7 @@ CharityHub Admin</span>
     // Cek auth & role
     axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
-            if (res.data.user.role !== 'Campaigner') {
+            if (res.data.data.user.role !== 'Campaigner') {
                 window.location.href = '/';
             }
         })

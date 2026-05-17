@@ -283,7 +283,7 @@ CharityHub Admin</span>
 
     axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
-            const user = res.data.user;
+            const user = res.data.data.user;
             if (user.role !== 'Campaigner') {
                 window.location.href = '/';
                 return;
@@ -292,7 +292,7 @@ CharityHub Admin</span>
             // Fetch campaigns
             return axios.get('/api/campaigns', { headers: { Authorization: `Bearer ${token}` } })
                 .then(campaignRes => {
-                    const allCampaigns = campaignRes.data.campaigns || [];
+                    const allCampaigns = campaignRes.data.data.campaigns || [];
                     const myCampaigns = allCampaigns.filter(c => c.user_id === user.id);
                     
                     renderDashboard(myCampaigns);
@@ -437,7 +437,7 @@ CharityHub Admin</span>
             // Reload dashboard
             window.location.reload();
         } catch (err) {
-            alert('Gagal menghapus: ' + (err.response?.data?.message || err.message));
+            alert('Gagal menghapus: ' + (err.response?.data?.error?.message || err.message));
         }
     }
 
