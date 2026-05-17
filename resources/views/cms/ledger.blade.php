@@ -122,29 +122,29 @@
 </div>
 <ul class="flex flex-col gap-2 px-unit">
 <li>
-<a class="flex items-center gap-3 px-gutter py-3 rounded-xl text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<a class="flex items-center gap-3 px-gutter py-3 rounded-xl text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md" href="/cms/dashboard">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
                     Dashboard
                 </a>
 </li>
 <li>
-<a class="flex items-center gap-3 px-gutter py-3 rounded-xl text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary dark:border-primary-fixed-dim bg-surface-container-high dark:bg-surface-variant font-label-md text-label-md" href="#">
+<a class="flex items-center gap-3 px-gutter py-3 rounded-xl text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary dark:border-primary-fixed-dim bg-surface-container-high dark:bg-surface-variant font-label-md text-label-md" href="/cms/dashboard">
 <span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
                     Kampanye Saya
                 </a>
 </li>
 <li>
-<a class="flex items-center gap-3 px-gutter py-3 rounded-xl text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<a class="flex items-center gap-3 px-gutter py-3 rounded-xl text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md" href="/cms/campaigns/create">
 <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
                     Buat Kampanye Baru
                 </a>
 </li>
 </ul>
 <div class="mt-auto px-unit">
-<a class="flex items-center gap-3 px-gutter py-3 rounded-xl text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<button onclick="logoutAction()" class="w-full flex items-center gap-3 px-gutter py-3 rounded-xl text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-200 ease-in-out font-label-md text-label-md">
 <span class="material-symbols-outlined" data-icon="logout">logout</span>
                 Keluar
-            </a>
+            </button>
 </div>
 </nav>
 <!-- TopAppBar -->
@@ -171,10 +171,10 @@
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-section-gap bg-surface-container-lowest p-gutter rounded-xl border border-outline-variant shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
 <div>
 <div class="flex items-center gap-3 mb-2">
-<h2 class="font-headline-lg text-headline-lg text-on-surface">Bantu Pendidikan Anak Yatim di Desa Makmur</h2>
-<span class="px-3 py-1 bg-[#dcfce7] text-[#166534] text-label-sm font-label-sm rounded-full border border-[#bbf7d0] flex items-center gap-1">
-<span class="w-2 h-2 rounded-full bg-[#16a34a]"></span> Aktif
-                    </span>
+<h2 id="campaignTitle" class="font-headline-lg text-headline-lg text-on-surface">Memuat Data...</h2>
+<span id="campaignStatus" class="px-3 py-1 bg-surface-container-high text-on-surface-variant text-label-sm font-label-sm rounded-full border border-outline-variant flex items-center gap-1">
+...
+</span>
 </div>
 <p class="font-body-md text-body-md text-on-surface-variant">Detail Manajemen Arus Kas</p>
 </div>
@@ -191,7 +191,7 @@
 <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
 <h3 class="font-label-md text-label-md">Total Donasi Masuk</h3>
 </div>
-<div class="text-3xl font-bold font-headline-md text-on-surface">Rp 25.000.000</div>
+<div class="text-3xl font-bold font-headline-md text-on-surface" id="totalDonations">Rp 0</div>
 </div>
 <!-- Card 2: Total Pencairan -->
 <div class="bg-surface-container-lowest p-gutter rounded-xl border border-outline-variant shadow-[0_2px_12px_rgba(0,0,0,0.04)] flex flex-col justify-between h-40">
@@ -199,7 +199,7 @@
 <span class="material-symbols-outlined" data-icon="payments">payments</span>
 <h3 class="font-label-md text-label-md">Total Pencairan</h3>
 </div>
-<div class="text-3xl font-bold font-headline-md text-on-surface">Rp 15.000.000</div>
+<div class="text-3xl font-bold font-headline-md text-on-surface" id="totalDisbursements">Rp 0</div>
 </div>
 <!-- Card 3: Sisa Saldo -->
 <div class="bg-surface-container-high p-gutter rounded-xl border border-primary-fixed-dim shadow-[0_4px_24px_rgba(0,0,0,0.08)] flex flex-col justify-between h-40 relative overflow-hidden">
@@ -210,7 +210,7 @@
 <span class="material-symbols-outlined" data-icon="savings">savings</span>
 <h3 class="font-label-md text-label-md">Sisa Saldo Kampanye</h3>
 </div>
-<div class="text-4xl font-extrabold font-headline-lg text-primary z-10">Rp 10.000.000</div>
+<div class="text-4xl font-extrabold font-headline-lg text-primary z-10" id="currentBalance">Rp 0</div>
 </div>
 </div>
 <!-- Area Aksi & Tabel Riwayat -->
@@ -220,7 +220,7 @@
 <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Riwayat Pengeluaran</h3>
 <p class="font-label-md text-label-md text-on-surface-variant">Daftar transaksi pencairan dana untuk kampanye ini.</p>
 </div>
-<button class="bg-primary hover:bg-surface-tint text-on-primary px-6 py-3 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-2 shadow-sm">
+<button onclick="document.getElementById('disbursementModal').classList.remove('hidden')" class="bg-primary hover:bg-surface-tint text-on-primary px-6 py-3 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-2 shadow-sm">
 <span class="material-symbols-outlined" data-icon="add">add</span>
                     Catat Pencairan Uang Keluar Baru
                 </button>
@@ -236,43 +236,149 @@
 <th class="p-4 font-medium text-center">Status</th>
 </tr>
 </thead>
-<tbody class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant">
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="p-4">12 Okt 2023</td>
-<td class="p-4 font-mono text-sm text-outline">TRX-001-SGM</td>
-<td class="p-4">Pembelian Seragam Sekolah 50 Set</td>
-<td class="p-4 text-right font-medium text-error">- Rp 5.000.000</td>
-<td class="p-4 text-center">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#dcfce7] text-[#166534]">
-<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span> Berhasil
-                                </span>
-</td>
-</tr>
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="p-4">15 Okt 2023</td>
-<td class="p-4 font-mono text-sm text-outline">TRX-002-ATK</td>
-<td class="p-4">Pembelian Alat Tulis dan Buku Lengkap</td>
-<td class="p-4 text-right font-medium text-error">- Rp 3.000.000</td>
-<td class="p-4 text-center">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#dcfce7] text-[#166534]">
-<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span> Berhasil
-                                </span>
-</td>
-</tr>
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="p-4">20 Okt 2023</td>
-<td class="p-4 font-mono text-sm text-outline">TRX-003-SPP</td>
-<td class="p-4">Pembayaran Biaya SPP Semester 1</td>
-<td class="p-4 text-right font-medium text-error">- Rp 7.000.000</td>
-<td class="p-4 text-center">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#dcfce7] text-[#166534]">
-<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span> Berhasil
-                                </span>
-</td>
-</tr>
+<tbody id="disbursementTable" class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant">
+    <tr><td colspan="5" class="p-4 text-center text-on-surface-variant">Memuat data...</td></tr>
 </tbody>
 </table>
 </div>
 </div>
 </main>
+
+<!-- Modal Pencairan Dana -->
+<div id="disbursementModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-surface-container-lowest rounded-xl w-full max-w-lg p-6 shadow-xl">
+        <h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Catat Pencairan Baru</h3>
+        <form id="disbursementForm">
+            <div class="mb-4">
+                <label class="block font-label-md text-on-surface mb-2">Jumlah Pencairan (Rp)</label>
+                <input type="number" id="disbursementAmount" class="w-full border border-outline-variant rounded-lg p-2" required min="1000">
+            </div>
+            <div class="mb-4">
+                <label class="block font-label-md text-on-surface mb-2">Deskripsi Keperluan</label>
+                <textarea id="disbursementDesc" class="w-full border border-outline-variant rounded-lg p-2" required></textarea>
+            </div>
+            <div class="flex justify-end gap-3 mt-6">
+                <button type="button" onclick="document.getElementById('disbursementModal').classList.add('hidden')" class="px-4 py-2 border border-outline-variant rounded-lg text-on-surface-variant">Batal</button>
+                <button type="submit" class="px-4 py-2 bg-primary text-on-primary rounded-lg">Catat</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const token = localStorage.getItem('jwt_token');
+    if (!token) window.location.href = '/login';
+
+    const campaignId = window.location.pathname.split('/')[3];
+    let totalCollectedAmount = 0;
+    let totalDisbursedAmount = 0;
+
+    axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
+        .then(res => {
+            if (res.data.user.role !== 'Campaigner') window.location.href = '/';
+            loadData();
+        })
+        .catch(() => window.location.href = '/login');
+
+    async function loadData() {
+        try {
+            // Load Campaign Info
+            const campRes = await axios.get(`/api/campaigns/${campaignId}`);
+            const campaign = campRes.data.campaign;
+            
+            document.getElementById('campaignTitle').textContent = campaign.title;
+            const statusEl = document.getElementById('campaignStatus');
+            
+            if (campaign.status === 'Aktif') {
+                statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-[#16a34a]"></span> Aktif`;
+                statusEl.className = 'px-3 py-1 bg-[#dcfce7] text-[#166534] text-label-sm font-label-sm rounded-full border border-[#bbf7d0] flex items-center gap-1';
+            } else {
+                statusEl.innerHTML = `Selesai`;
+                statusEl.className = 'px-3 py-1 bg-gray-200 text-gray-700 text-label-sm font-label-sm rounded-full border border-gray-300 flex items-center gap-1';
+            }
+
+            // Calculate total from donations (since backend returns raw)
+            totalCollectedAmount = (campaign.donations || []).reduce((sum, d) => sum + parseFloat(d.amount), 0);
+
+            // Load Logs
+            const logRes = await axios.get(`/api/campaigns/${campaignId}/logs`);
+            const logs = logRes.data;
+            
+            const disbursements = logs.disbursements || [];
+            totalDisbursedAmount = disbursements.reduce((sum, d) => sum + parseFloat(d.amount), 0);
+
+            document.getElementById('totalDonations').textContent = formatCurrency(totalCollectedAmount);
+            document.getElementById('totalDisbursements').textContent = formatCurrency(totalDisbursedAmount);
+            document.getElementById('currentBalance').textContent = formatCurrency(totalCollectedAmount - totalDisbursedAmount);
+
+            renderTable(disbursements);
+        } catch (err) {
+            console.error(err);
+            alert('Gagal memuat data');
+        }
+    }
+
+    function renderTable(disbursements) {
+        const tbody = document.getElementById('disbursementTable');
+        tbody.innerHTML = '';
+        if (disbursements.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-on-surface-variant">Belum ada pencairan</td></tr>';
+            return;
+        }
+
+        disbursements.forEach(d => {
+            const date = new Date(d.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+            tbody.innerHTML += `
+            <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="p-4">${date}</td>
+                <td class="p-4 font-mono text-sm text-outline">OUT-${d.id.toString().padStart(4, '0')}</td>
+                <td class="p-4">${d.description}</td>
+                <td class="p-4 text-right font-medium text-error">- ${formatCurrency(d.amount)}</td>
+                <td class="p-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#dcfce7] text-[#166534]">
+                        <span class="material-symbols-outlined text-[14px]">check_circle</span> Berhasil
+                    </span>
+                </td>
+            </tr>`;
+        });
+    }
+
+    function formatCurrency(num) {
+        return 'Rp ' + num.toLocaleString('id-ID');
+    }
+
+    document.getElementById('disbursementForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const amount = parseFloat(document.getElementById('disbursementAmount').value);
+        const desc = document.getElementById('disbursementDesc').value;
+
+        if (amount > (totalCollectedAmount - totalDisbursedAmount)) {
+            alert('Saldo tidak mencukupi untuk pencairan ini!');
+            return;
+        }
+
+        try {
+            await axios.post(`/api/campaigns/${campaignId}/disbursements`, {
+                amount: amount,
+                description: desc
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert('Pencairan berhasil dicatat!');
+            document.getElementById('disbursementModal').classList.add('hidden');
+            document.getElementById('disbursementForm').reset();
+            loadData();
+        } catch (err) {
+            alert('Error: ' + (err.response?.data?.message || err.message));
+        }
+    });
+
+    function logoutAction() {
+        localStorage.removeItem('jwt_token');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_role');
+        window.location.href = '/login';
+    }
+</script>
 </body></html>

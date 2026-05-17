@@ -191,13 +191,13 @@
             <div class="bg-surface rounded-2xl border border-outline-variant/30 p-6 md:p-8 sticky top-24">
                 <h2 class="text-xl font-bold text-on-surface mb-6">Ringkasan</h2>
 
-                <!-- Campaign Info (would be dynamic) -->
-                <div class="pb-6 border-b border-outline-variant/20">
+                <!-- Campaign Info (dynamic) -->
+                <div class="pb-6 border-b border-outline-variant/20" id="campaignInfoContainer">
                     <div class="aspect-video rounded-xl overflow-hidden bg-surface-container-low mb-3">
-                        <img alt="Campaign" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ7D2aluOYR7DozkSkS5Bybjo-6Xz-W1FQ209BJ7V1-rpf-lkkNKne2Gq2VgpokS3pFAfbK__bjIq6XOPBrYlzCwVQLdW3Jx4usKu2egXKpspEwqlSWBMO8lbxCcohONl8dWCqkcDkKv3Rt1gLYLmC7Wbbi8fAGZz-7jxCnC8k05PiFMp9Wtpx95buK8q9im-VvGFSUYBt1GFanNzRnk0s0AH-tjzHW67_7Z0dOQhhQoitklJ8dLvDQxX1iJH9z1nWT-MEf6hbaAg"/>
+                        <img id="campaignImage" alt="Campaign" class="w-full h-full object-cover" src=""/>
                     </div>
-                    <h3 class="font-semibold text-on-surface mb-2">Renovasi Sekolah Pelosok</h3>
-                    <p class="text-xs text-on-surface-variant">ID Kampanye: #CHARITY-2024-001</p>
+                    <h3 id="campaignTitle" class="font-semibold text-on-surface mb-2">Memuat Kampanye...</h3>
+                    <p id="campaignIdDisplay" class="text-xs text-on-surface-variant">ID Kampanye: --</p>
                 </div>
 
                 <!-- Cost Breakdown -->
@@ -263,7 +263,41 @@
         return config;
     });
 
+    const campaignId = window.location.pathname.split('/')[2];
     let donationAmount = 0;
+
+    // Load campaign details & user profile
+    async function initCheckout() {
+        try {
+            const token = localStorage.getItem('jwt_token');
+            if (!token) {
+                alert('Anda harus login sebagai Donatur untuk berdonasi.');
+                window.location.href = '/login';
+                return;
+            }
+
+            // Fill donor name if logged in
+            const userName = localStorage.getItem('user_name');
+            if (userName) document.getElementById('donorName').value = userName;
+
+            // Fetch campaign
+            const res = await axios.get(`/api/campaigns/${campaignId}`);
+            const campaign = res.data.campaign;
+            
+            document.getElementById('campaignTitle').textContent = campaign.title;
+            document.getElementById('campaignIdDisplay').textContent = 'ID Kampanye: #CH-' + campaign.id.toString().padStart(4, '0');
+            
+            const imgEl = document.getElementById('campaignImage');
+            if (campaign.image) {
+                imgEl.src = '/storage/' + campaign.image;
+            } else {
+                imgEl.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZ7D2aluOYR7DozkSkS5Bybjo-6Xz-W1FQ209BJ7V1-rpf-lkkNKne2Gq2VgpokS3pFAfbK__bjIq6XOPBrYlzCwVQLdW3Jx4usKu2egXKpspEwqlSWBMO8lbxCcohONl8dWCqkcDkKv3Rt1gLYLmC7Wbbi8fAGZz-7jxCnC8k05PiFMp9Wtpx95buK8q9im-VvGFSUYBt1GFanNzRnk0s0AH-tjzHW67_7Z0dOQhhQoitklJ8dLvDQxX1iJH9z1nWT-MEf6hbaAg';
+            }
+        } catch (error) {
+            alert('Gagal memuat detail kampanye.');
+            window.location.href = '/';
+        }
+    }
 
     // Preset buttons
     document.querySelectorAll('.preset-amount').forEach(btn => {
@@ -299,41 +333,43 @@
 
     // Submit
     document.getElementById('submitBtn').addEventListener('click', async () => {
-        const campaignId = new URLSearchParams(window.location.search).get('campaign_id') || 1;
         const donorName = document.getElementById('donorName').value;
-        const donorEmail = document.getElementById('donorEmail').value;
-        const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
         const anonymous = document.getElementById('anonymous').checked;
 
-        if (!donationAmount) {
-            alert('Silakan pilih jumlah donasi');
+        if (donationAmount < 10000) {
+            alert('Minimal donasi adalah Rp 10.000');
             return;
         }
-        if (!donorName || !donorEmail) {
-            alert('Silakan lengkapi data diri');
-            return;
-        }
-        if (!paymentMethod) {
-            alert('Silakan pilih metode pembayaran');
+        if (!donorName) {
+            alert('Silakan lengkapi nama diri');
             return;
         }
 
+        const finalName = anonymous ? 'Hamba Allah' : donorName;
+
+        // Visual loading
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span> Memproses...';
+
         try {
-            const response = await axios_instance.post(`/campaigns/${campaignId}/donations`, {
+            await axios_instance.post(`/campaigns/${campaignId}/donations`, {
                 amount: donationAmount,
-                donor_name: donorName,
-                donor_email: donorEmail,
-                payment_method: paymentMethod,
-                is_anonymous: anonymous
+                donor_name: finalName,
+                message: 'Donasi melalui form web'
             });
-            alert('Donasi berhasil! ID: ' + response.data.id);
-            // Redirect to payment gateway or confirmation page
+            alert('Donasi berhasil! Terima kasih atas kebaikan Anda.');
+            window.location.href = `/campaigns/${campaignId}`;
         } catch (error) {
-            alert('Error: ' + (error.response?.data?.message || error.message));
+            const msg = error.response?.data?.message || error.message;
+            alert('Error: ' + msg);
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">favorite</span> Lanjut ke Pembayaran';
         }
     });
 
     // Initialize
+    initCheckout();
     updateTotal();
 </script>
 

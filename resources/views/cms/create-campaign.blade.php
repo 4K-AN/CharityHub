@@ -123,24 +123,24 @@
 </a>
 </div>
 <nav class="flex-1 px-4 py-6 space-y-2">
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" href="#">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" href="/cms/dashboard">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-label-md text-label-md">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" href="#">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" href="/cms/dashboard">
 <span class="material-symbols-outlined">list_alt</span>
 <span class="font-label-md text-label-md">Kampanye Saya</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container" href="#">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container" href="/cms/campaigns/create">
 <span class="material-symbols-outlined fill">add_circle</span>
 <span class="font-label-md text-label-md font-bold">Buat Kampanye Baru</span>
 </a>
 </nav>
 <div class="p-4 border-t border-outline-variant/20">
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-error transition-colors" href="#">
+<button onclick="logoutAction()" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-error transition-colors">
 <span class="material-symbols-outlined">logout</span>
 <span class="font-label-md text-label-md">Keluar (Logout)</span>
-</a>
+</button>
 </div>
 </aside>
 <!-- Main Content -->
@@ -185,6 +185,11 @@
 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
 </div>
 </div>
+<!-- Tenggat Waktu (Deadline) -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="campaign-deadline">Batas Waktu</label>
+<input class="w-full bg-surface-bright border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none transition-colors" id="campaign-deadline" type="date" required/>
+</div>
 <div>
 <label class="block font-label-md text-label-md text-on-surface mb-2" for="campaign-target">Target Dana</label>
 <div class="relative flex items-center">
@@ -216,10 +221,10 @@
 </div>
 <!-- Actions -->
 <div class="pt-6 border-t border-outline-variant/20 flex justify-end gap-4 mt-8">
-<button class="px-6 py-2.5 border border-primary text-primary rounded-lg font-label-md text-label-md hover:bg-primary/5 transition-colors" type="button">
+<button id="cancel-btn" class="px-6 py-2.5 border border-primary text-primary rounded-lg font-label-md text-label-md hover:bg-primary/5 transition-colors" type="button">
                             Batal
                         </button>
-<button class="px-6 py-2.5 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md hover:bg-primary transition-colors shadow-sm" type="submit">
+<button id="submit-btn" class="px-6 py-2.5 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md hover:bg-primary transition-colors shadow-sm" type="submit">
                             Rilis Kampanye
                         </button>
 </div>
@@ -227,4 +232,79 @@
 </div>
 </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const token = localStorage.getItem('jwt_token');
+    if (!token) {
+        window.location.href = '/login';
+    }
+
+    // Cek auth & role
+    axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
+        .then(res => {
+            if (res.data.user.role !== 'Campaigner') {
+                window.location.href = '/';
+            }
+        })
+        .catch(() => {
+            window.location.href = '/login';
+        });
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const title = document.getElementById('campaign-title').value;
+        const target = document.getElementById('campaign-target').value;
+        const desc = document.getElementById('campaign-desc').value;
+        const deadline = document.getElementById('campaign-deadline').value;
+        const imageFile = document.getElementById('file-upload').files[0];
+
+        if (!title || !target || !desc || !deadline) {
+            alert('Harap lengkapi semua field wajib');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('goal_amount', target);
+        formData.append('description', desc);
+        formData.append('deadline', deadline);
+        if (imageFile) {
+            formData.append('image', imageFile);
+        }
+
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.textContent = 'Memproses...';
+
+        try {
+            const res = await axios.post('/api/campaigns', formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            alert('Kampanye berhasil dibuat!');
+            window.location.href = '/cms/dashboard';
+        } catch (error) {
+            alert('Gagal membuat kampanye: ' + (error.response?.data?.message || 'Error'));
+            btn.disabled = false;
+            btn.textContent = 'Rilis Kampanye';
+        }
+    });
+    
+    document.getElementById('cancel-btn').addEventListener('click', () => {
+        window.location.href = '/cms/dashboard';
+    });
+
+    function logoutAction() {
+        localStorage.removeItem('jwt_token');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_role');
+        window.location.href = '/login';
+    }
+</script>
+
 </body></html>
