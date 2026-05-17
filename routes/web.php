@@ -2,6 +2,32 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+|--------------------------------------------------------------------------
+| Web Routes — HANYA untuk menampilkan View HTML statis
+|--------------------------------------------------------------------------
+| DILARANG mengirim data via compact() atau with().
+| Semua data diambil oleh JavaScript melalui API.
+|--------------------------------------------------------------------------
+*/
+
+// Landing Page
+Route::get('/', fn() => view('landing'));
+
+// Campaign Detail
+Route::get('/campaigns/{id}', fn() => view('campaign-detail'));
+
+// Auth Pages
+Route::get('/login', fn() => view('auth.login'));
+Route::get('/register', fn() => view('auth.register'));
+
+// User Profile
+Route::get('/profile', fn() => view('profile'));
+
+// Checkout / Donasi
+Route::get('/campaigns/{id}/donate', fn() => view('checkout'));
+
+// CMS (Content Management System) — untuk Campaigner
+Route::get('/cms/dashboard', fn() => view('cms.dashboard'));
+Route::get('/cms/campaigns/create', fn() => view('cms.create-campaign'));
+Route::get('/cms/campaigns/{id}/ledger', fn() => view('cms.ledger'));
