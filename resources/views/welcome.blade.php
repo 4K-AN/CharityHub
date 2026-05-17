@@ -138,7 +138,7 @@
 <!-- Hero Section -->
 <section class="relative w-full h-[614px] min-h-[400px] flex items-center justify-center overflow-hidden bg-surface-variant">
 <div class="absolute inset-0 z-0">
-<img alt="Group of diverse people volunteering together at a beach cleanup during sunset, symbolizing solidarity and community support. The warm golden hour lighting highlights their collaborative effort." class="w-full h-full object-cover object-center" data-alt="A highly detailed and wide shot of a diverse group of volunteers gathering on a sandy beach during a vibrant, warm sunset. They are holding cardboard boxes labeled 'HELPING HANDS', coordinating a community relief effort or beach cleanup. The lighting is golden hour, casting long soft shadows and emphasizing unity and human solidarity. The overall aesthetic should align with corporate modernism: clean, uplifting, and professional, utilizing a warm color palette that contrasts slightly with the brand's primary sea blue tones to create an inspiring hero image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM6G6iZHNizDxA6EkPM_nV3xaFHtpA37ktSb-m-mJgEmhXY-GUruya0mKfT_xMpviNzmJXxGHp2sdi_bbW_0pVbk3m4UmRnZ7d5bFNl_izrRm6VugvJFD7ILXe3jZnClOV9AaBkuRe5NTR6zGsvNH-_V_btqPBgZwA_ub5P6T6X3y3KOh4hMoIT-itBavOSihBMkOjQ7X_w442UnSQ-Ik-m13JNXRVN5LJ-dwXO2RwQnxdX5T0VJOm0LIky76U4jeYhGzrFfVJ_CM"/>
+<img alt="Group of diverse people volunteering together" class="w-full h-full object-cover object-center" src="/images/about-hero.jpg"/>
 <div class="absolute inset-0 bg-surface-inverse/60 mix-blend-multiply"></div>
 <!-- Linear gradient overlay to ensure text readability -->
 <div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 to-transparent"></div>
@@ -198,25 +198,25 @@
 <!-- Team Member 1 -->
 <div class="flex flex-col items-center bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/20">
 <div class="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-surface bg-surface-variant">
-<img alt="Profile placeholder for team member" class="w-full h-full object-cover" data-alt="A professional headshot of a young male software developer. He is smiling warmly at the camera, wearing a neat casual shirt. The background is a minimalist, softly blurred modern office environment with a light, airy aesthetic, fitting the corporate modernism style of the overall brand. The lighting is bright and even, casting no harsh shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOJCaiPbOC852ySnXop1_Do_BDiW5yRltCscgAO8umC1aPb_UQbLeDGBFSMBWW0Q-lXfq6iVEM2iuxep0Xce5FNoqKYXlWbDKaIuNeJpqzEUUlhDqbaV3KQqNPTa9rP9pmAsNXV7p32eaSPga0VyW2KQfzDacQaL5_ja10bWI5_BCBr-1JuoBcrTSH_13x9WRq4SqKtpJ6xbWN3cD4HnBDcWAivuFiSFAF-4bkv_VMUI_e4BM7aZIS2Jx4Y-D6vfVRPPXok0yoyZA"/>
+<img alt="Profile team member 1" class="w-full h-full object-cover" src="/images/team-1.jpg"/>
 </div>
-<h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Nama Anggota 1</h4>
+<h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Akhmad Syaiful Anam</h4>
 <p class="font-label-md text-label-md text-primary bg-primary-fixed px-3 py-1 rounded-full uppercase tracking-wider">Backend &amp; Security</p>
 </div>
 <!-- Team Member 2 -->
 <div class="flex flex-col items-center bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/20">
 <div class="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-surface bg-surface-variant">
-<img alt="Profile placeholder for team member" class="w-full h-full object-cover" data-alt="A professional headshot of a young female data analyst. She looks confident and approachable, wearing smart casual attire. The background is a clean, softly out-of-focus modern workspace with subtle light blue and white tones, reflecting the brand's primary color palette. The portrait uses soft, flattering natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7og-KbARL2oXV79p_rPe7SKwSyiW0ioTABGqPoTfGUrL_LLedALw4jXfyB_srzAgdnk1UlHONqHq7WHtaDvoaIQyGobXfNfQnKvdk8ovivLDOWknkIQ2HMLn33Yhc_wMJNr2aT4_zSRgUul79nG3nj0pA026B8vD9uc4f-LEBUnenCYmaFYf2w9pzSGr8mphIX9Kw3Iqbz0XgyUNYYu6T1d6oIWJ-JN9-7iF7NRwOo7XNPa7bfG7ELspK8ArN_utVEekgeKPepeE"/>
+<img alt="Profile team member 2" class="w-full h-full object-cover" src="/images/team-2.jpg"/>
 </div>
-<h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Nama Anggota 2</h4>
+<h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Angilbert Yohanes Sirait</h4>
 <p class="font-label-md text-label-md text-secondary bg-secondary-fixed px-3 py-1 rounded-full uppercase tracking-wider">Data &amp; Campaign</p>
 </div>
 <!-- Team Member 3 -->
 <div class="flex flex-col items-center bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/20">
 <div class="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-surface bg-surface-variant">
-<img alt="Profile placeholder for team member" class="w-full h-full object-cover" data-alt="A professional headshot of a young male UI/UX designer. He has a friendly expression and is dressed in a minimalist, modern dark t-shirt. The background is a bright, indistinct studio or modern office setting with excellent, high-key lighting that emphasizes a clean and trustworthy corporate identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0960m0K5s23xayBlWzWzq9bRETnAXWauba1F3L12CytdyN_rTKF0rZ8S7-QiyJ7-I95-tzcMcVrhTFU69SZ0U6j7-HhOGcOAN9SLTiO88INX31DjThN3cuT8NQ0Zf_0siilzakIAbi9CmDeHFEHZ2qG08sqZOQpweEE0WSEBSxsSOs9JFl2HTp2HIMzaFWIrkX-XLbpXN1-VAddPO_2QMrt9Fe-26O1PJimtfgZgjnrTI5GjdhWuzW5em1YL2ziyNICkYqaNf9k0"/>
+<img alt="Profile team member 3" class="w-full h-full object-cover" src="/images/team-3.jpg"/>
 </div>
-<h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Nama Anggota 3</h4>
+<h4 class="font-headline-md text-headline-md text-on-surface text-center mb-1">Firdaus Dewansyah</h4>
 <p class="font-label-md text-label-md text-tertiary bg-tertiary-fixed px-3 py-1 rounded-full uppercase tracking-wider">Ledger &amp; UI</p>
 </div>
 </div>

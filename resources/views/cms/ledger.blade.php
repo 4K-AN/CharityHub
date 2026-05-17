@@ -162,7 +162,7 @@
 <span class="material-symbols-outlined text-[16px] text-primary" data-icon="verified">verified</span>
 <span class="font-label-sm text-label-sm text-on-surface">Campaigner</span>
 </div>
-<img alt="User Avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a young man with a neutral expression, wearing a casual shirt, set against a blurred outdoor background, optimized for a modern corporate web interface profile picture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyqHldl2SOU05vmLzHvYH91hvq6LgTdfUgczaaiF0mx0oUUOO2KKPYCrVk4Q4BnbLtgwtWlrPn39jQRkZ6i58yk6Im37F_ZSEw4u2uHhKoBJ4xnW6Ysf_ar_g6wVL3W1mjXZypS-74GQvRXzcaAx8y5X7ABgFxLdN3O8-FX8cq8rFy3270LD4ey3_RE4f-8pE1Ztwxak1Z-R6N-3mLYEAIHTacUcG-vK5Ci9-nT1eqdcbGa6yEgBPTauOtGuDmWooGxBKyR7bw0g4"/>
+<img alt="User Avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant" src="/images/avatar-placeholder.jpg"/>
 </div>
 </header>
 <!-- Main Content -->

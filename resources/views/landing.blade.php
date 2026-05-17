@@ -194,7 +194,7 @@
 <!-- Hero Image with Shadow -->
 <div class="w-full max-w-4xl mt-12 group">
 <div class="relative rounded-2xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
-<img alt="Ilustrasi orang-orang berkolaborasi mengangkat hati biru bersama, melambangkan gotong royong dan kepedulian sosial" class="w-full h-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWzP6L3s2yl7xbGaDtSMZ7tU4NS7X79yqkVUX3auX9I_0sOm1vE7tAlES5ESftNcIIoA0YXuUVjAjwoBKV2NOMFBMr7sl8epOrAO4_8P3Xt-riQ8Au92s3kTaZ_RDZbKmGF0-dV8juMZSbC2LuA_bSBS7boKKuI3d5nYSW6Ys1B7KMyjmJczSR_5abQQ2xAu0OIsE9mimeeUrZJyR8QrS___DVXwDHub5eyhJVsNyzcU2CsrT5teAM84Qb4wCN_rDJ2IJNAyJT_sc"/>
+<img alt="Ilustrasi orang-orang berkolaborasi mengangkat hati biru bersama, melambangkan gotong royong dan kepedulian sosial" class="w-full h-auto object-contain" src="/images/landing-hero.jpg"/>
 <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 </div>
