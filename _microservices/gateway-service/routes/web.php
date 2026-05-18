@@ -37,3 +37,4 @@ Route::get('/campaigns/{id}/donate', fn() => view('checkout'));
 Route::get('/cms/dashboard', fn() => view('cms.dashboard'));
 Route::get('/cms/campaigns/create', fn() => view('cms.create-campaign'));
 Route::get('/cms/campaigns/{id}/ledger', fn() => view('cms.ledger'));
+Route::get('/test', fn() => 'test works');
