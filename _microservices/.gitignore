@@ -1,0 +1,13 @@
+# Abaikan semua folder vendor di service manapun
+vendor/
+*/vendor/
+**/*/vendor/
+
+# Abaikan file rahasia (.env tidak boleh masuk GitHub!)
+.env
+*/.env
+
+# Abaikan cache dan file sementara
+*/bootstrap/cache/
+*/storage/*.key
+*/storage/logs/
